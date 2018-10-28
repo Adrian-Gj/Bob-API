@@ -12,7 +12,14 @@ import subprocess
 import urllib.request
 import random
 from random import randrange
-
+try:
+    import wikipedia
+except ImportError:
+    print("[BOB] The 'wikipedia' python package is unavaliable. It is required for certain questions.")
+    print("[BOB] Installing package")
+    os.system("pip install wikipedia")
+    import wikipedia
+    
 try:
     import send2trash
 except ImportError:
@@ -22,6 +29,8 @@ except ImportError:
     import send2trash
 myname = "bob"
 username = getpass.getuser()
+
+it = ""
 
 def istime(text):
     timepts = 0
@@ -100,6 +109,7 @@ def istime(text):
 
     return timepts>locpts
 def remember(text):
+    global it
     thing = "is"
     rtype = "def1"
     x=0
@@ -158,22 +168,35 @@ def remember(text):
 
     input = text[:y]
     output = text[x:]
+    if input == "it" or input == "they":
+        x = it
+    else:
+        x = input
+
+    if output.startswith("also "):
+        output = info[x]+" "+output
+        
     if rtype == "loc1":
         print("1")
         if istime(output) == True:
             print("2")
             rtype = "time1"
-    
+            
     if rtype == "def1":
-        info[input] = output
+        info[x] = output
     if rtype == "def2":
-        info_was[input] = output
+        info_was[x] = output
     if rtype == "loc1":
-        location[input] = output
+        location[x] = output
     if rtype == "loc2":
-        location_was[input] = output
+        location_was[x] = output
     if rtype == "time1":
-        time[input] = output
+        time[x] = output
+
+    if input != "it":
+        it = input
+    if input != "they":
+        it = input
 
 def q_type(text):
     if text.startswith("what is "):
@@ -227,54 +250,61 @@ def q_type(text):
 
 
 def q_split(text):
+    x = ""
     if text.startswith("what is "):
-        return text[8:]
+        x = text[8:]
     elif text.startswith("what are "):
-        return text[9:]
+        x = text[9:]
     if text.startswith("what am "):
-        return text[8:]
+        x = text[8:]
     elif text.startswith("what was "):
-        return text[9:]
+        x = text[9:]
     elif text.startswith("what were "):
-        return text[10:]
+        x = text[10:]
     elif text.startswith("who is "):
-        return text[7:]
+        x = text[7:]
     elif text.startswith("who are "):
-        return text[8:]
+        x = text[8:]
     elif text.startswith("who am "):
-        return text[7:]
+        x = text[7:]
     elif text.startswith("who was "):
-        return text[8:]
+        x = text[8:]
     elif text.startswith("who were "):
-        return text[9:]
+        x = text[9:]
     elif text.startswith("when is "):
-        return text[8:]
+        x = text[8:]
     elif text.startswith("when am "):
-        return text[8:]
+        x = text[8:]
     elif text.startswith("when are "):
-        return text[9:]
+        x = text[9:]
     elif text.startswith("what time is "):
-        return text[13:]
+        x = text[13:]
     elif text.startswith("what time am "):
-        return text[13:]
+        x = text[13:]
     elif text.startswith("what time are "):
-        return text[14:]
+        x = text[14:]
     elif text.startswith("where is "):
-        return text[9:]
+        x = text[9:]
     elif text.startswith("where am "):
-        return text[9:]
+        x = text[9:]
     elif text.startswith("where was "):
-        return text[10:]
+        x = text[10:]
     elif text.startswith("how is "):
-        return text[7:]
+        x = text[7:]
     elif text.startswith("how are "):
-        return text[8:]
+        x = text[8:]
     elif text.startswith("how am "):
-        return text[7:]
+        x = text[7:]
     elif text.startswith("how was "):
-        return text[8:]
+        x = text[8:]
     elif text.startswith("how were "):
-        return text[9:]
+        x = text[9:]
+
+    if x == "it":
+        x=it
+    if x == "they":
+        x=it
+    return x
 
 def q_t1_proc(text):
     x = text
@@ -403,7 +433,10 @@ def play( stri ):
     else:
         print(" I can find that song...")
         print(str(Path.home())+"/Music/"+stri)
-    
+
+def search(string):
+    x = string.split(" ")
+    open_file("https://www.google.com/search?q="+string.replace("%","%25").replace("+","%2B").replace(" ","+"))
 def say( str ):
     "This processes text to be said"
     x = " "+str+" "
@@ -429,19 +462,18 @@ def say( str ):
     print(x.replace("$$@#¬¬¬"," "))
     return
 
-info = {"pi": "3.141592653589793",
+info = {
         "you": "Great Thanks!",
-        "life": "42 and it is quite good"
         }
-info_was = {"muddy waters": "some guy"
-        }
-
-location = {"park": "somewhere over the rainbow"
-        }
-location_was = {"park": "under the sea"
+info_was = {
         }
 
-time = {"noon": "12 o'clock in the morning."
+location = {
+        }
+location_was = {
+        }
+
+time = {
         }
 
 sims = {
@@ -517,6 +549,18 @@ print()
 say("Hello I'm Bob!")
 
 os.chdir(str(Path.home()))
+
+def ask(str):
+    if "value of" in str:
+        return ""
+    try:
+        data = wikipedia.summary(wikipedia.search(str)[0], sentences=2)
+    except wikipedia.exceptions.DisambiguationError:
+        data = ""
+    except IndexError:
+        data = ""
+    return data
+    
 ########################################Main Loop###################################################################################################################
 while True:
     info["up"]="the sky"
@@ -642,19 +686,23 @@ while True:
             text = text[:len(text)-7]
             nocap = nocap[:len(nocap)-7]
 
+
     #Reply to stuff
     if Greeting:
         print(" Hi "+username+"!")
         
-        
+    #Remove and
+    if text.startswith("and "):
+        text = text[4:]
+        nocap = nocap[4:]
 
 ########################################################Section 2#########################################################################################################
 
 
 
 
-#####Question
-    elif text.startswith("what "):
+#####Question  
+    if text.startswith("what "):
         x = q_split(text)
         if q_type(text) == "def1":
             y = q_t1_proc(x)
@@ -663,7 +711,11 @@ while True:
             elif y in sims:            
                 say(info[sims[y]])
             else:
-                say("Sorry but, you don't know what "+y+" is.")
+                x = ask(nocap)
+                if x != "":
+                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                else:
+                    say("Sorry but, you don't know what "+y+" is.")
         if q_type(text) == "def2":
             y = q_t1_proc(x)
             if y in info_was:
@@ -671,7 +723,11 @@ while True:
             elif y in sims:            
                 say(info_was[sims[y]])
             else:
-                say("Sorry but, you don't know what "+y+" was.")
+                x = ask(nocap)
+                if x != "":
+                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                else:
+                    say("Sorry but, you don't know what "+y+" was.")
         if q_type(text) == "time1":
             y = q_t1_proc(x)
             if y in time:
@@ -679,7 +735,11 @@ while True:
             elif y in sims:            
                 say(time[sims[y]])
             else:
-                say("Sorry but, you don't know when "+y+" is.")
+                x = ask(nocap)
+                if x != "":
+                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                else:
+                    say("Sorry but, you don't know when "+y+" is.")
     elif text.startswith("who "):
         x = q_split(text)
         if q_type(text) == "def1":
@@ -689,7 +749,11 @@ while True:
             elif y in sims:            
                 say(info[sims[y]])
             else:
-                say("Sorry but, you don't know who "+y+" is.")
+                x = ask(nocap)
+                if x != "":
+                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                else:
+                    say("Sorry but, you don't know who "+y+" is.")
         if q_type(text) == "def2":
             y = q_t1_proc(x)
             if y in info_was:
@@ -697,7 +761,11 @@ while True:
             elif y in sims:            
                 say(info_was[sims[y]])
             else:
-                say("Sorry but, you don't know who "+y+" was.")
+                x = ask(nocap)
+                if x != "":
+                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                else:
+                    say("Sorry but, you don't know who "+y+" was.")
     elif text.startswith("where "):
         if text.endswith(" on"):
             text[:len(text)-3]
@@ -713,7 +781,11 @@ while True:
             elif y in sims:            
                 say(location[sims[y]])
             else:
-                say("Sorry but, you don't know where "+y+" is.")
+                x = ask(nocap)
+                if x != "":
+                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                else:
+                    say("Sorry but, you don't know where "+y+" is.")
         if q_type(text) == "loc2":
             y = q_t1_proc(x)
             if y in location_was:
@@ -721,7 +793,11 @@ while True:
             elif y in sims:            
                 say(location_was[sims[y]])
             else:
-                say("Sorry but, you don't know where "+y+" was.")
+                x = ask(nocap)
+                if x != "":
+                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                else:
+                    say("Sorry but, you don't know where "+y+" was.")
     elif text.startswith("when "):
         if text.endswith(" on"):
             text[:len(text)-3]
@@ -737,7 +813,11 @@ while True:
             elif y in sims:            
                 say(time[sims[y]])
             else:
-                say("Sorry but, you don't know when "+y+" is.")
+                x = ask(nocap)
+                if x != "":
+                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                else:
+                    say("Sorry but, you don't know when "+y+" is.")
     elif text.startswith("how "):
         x = q_split(text)
         if q_type(text) == "def1":
@@ -747,7 +827,11 @@ while True:
             elif y in sims:            
                 say(info[sims[y]])
             else:
-                say("Sorry but, you don't know how "+y+" is.")
+                x = ask(nocap)
+                if x != "":
+                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                else:
+                    say("Sorry but, you don't know how "+y+" is.")
         if q_type(text) == "def2":
             y = q_t1_proc(x)
             if y in info_was:
@@ -755,7 +839,11 @@ while True:
             elif y in sims:            
                 say(info_was[sims[y]])
             else:
-                say("Sorry but, you don't know how "+y+" was.")
+                x = ask(nocap)
+                if x != "":
+                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                else:
+                    say("Sorry but, you don't know how "+y+" was.")
 
 
 #####Basic Commands        
