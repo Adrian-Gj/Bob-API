@@ -12,6 +12,17 @@ import subprocess
 import urllib.request
 import random
 from random import randrange
+from lxml import html
+import requests
+
+try:
+    from weather import Weather, Unit
+except ImportError:
+    print("[BOB] The 'weather-api' python package is unavaliable. It is required for getting the weather.")
+    print("[BOB] Installing package")
+    os.system("pip install weather-api")
+    from weather import Weather, Unit
+    
 try:
     import wikipedia
 except ImportError:
@@ -97,6 +108,25 @@ def istime(text):
         timepts += 30
     if text.endswith(" midnight"):
         timepts += 30
+    if "1" in text:
+        timepts += 1
+    if "2" in text:
+        timepts += 1
+    if "3" in text:
+        timepts += 1
+    if "4" in text:
+        timepts += 1
+    if "5" in text:
+        timepts += 1
+    if "6" in text:
+        timepts += 1
+    if "7" in text:
+        timepts += 1
+    if "8" in text:
+        timepts += 1
+    if "9" in text:
+        timepts += 1
+
         
     if 'street' in text:
         locpts += 20
@@ -110,8 +140,8 @@ def istime(text):
     return timepts>locpts
 def remember(text):
     global it
-    thing = "is"
-    rtype = "def1"
+    thing = "x"
+    rtype = "x"
     x=0
     y=0
     if text.find(' is in ')>0:
@@ -119,12 +149,12 @@ def remember(text):
         y = text.find(' is in ')
         thing = "is in"
         rtype = "loc1"
-    if text.find(' is at ')>0:
+    elif text.find(' is at ')>0:
         x = text.find(' is at ')+7
         y = text.find(' is at ')
         thing = "is at" 
         rtype = "loc1"
-    if text.find(' is on ')>0:
+    elif text.find(' is on ')>0:
         x = text.find(' is on ')+7
         y = text.find(' is on ')
         thing = "is on" 
@@ -175,12 +205,17 @@ def remember(text):
 
     if output.startswith("also "):
         output = info[x]+" "+output
-        
+
     if rtype == "loc1":
-        print("1")
+        #print("1")
         if istime(output) == True:
-            print("2")
+            #print("3")
             rtype = "time1"
+    if rtype == "loc2":
+        #print("2")
+        if istime(output) == True:
+            #print("4")
+            rtype = "time2"
             
     if rtype == "def1":
         info[x] = output
@@ -192,6 +227,8 @@ def remember(text):
         location_was[x] = output
     if rtype == "time1":
         time[x] = output
+    if rtype == "time2":
+        time_was[x] = output
 
     if input != "it":
         it = input
@@ -225,12 +262,20 @@ def q_type(text):
         return "time1"
     elif text.startswith("when are "):
         return "time1"
+    elif text.startswith("when was "):
+        return "time2"
+    elif text.startswith("when were "):
+        return "time2"
     elif text.startswith("what time is "):
         return "time1"
     elif text.startswith("what time am "):
         return "time1"
     elif text.startswith("what time are "):
         return "time1"
+    elif text.startswith("what time was "):
+        return "time2"
+    elif text.startswith("what time were "):
+        return "time2"
     elif text.startswith("where is "):
         return "loc1"
     elif text.startswith("where am "):
@@ -277,12 +322,20 @@ def q_split(text):
         x = text[8:]
     elif text.startswith("when are "):
         x = text[9:]
+    elif text.startswith("when was "):
+        x = text[9:]
+    elif text.startswith("when were "):
+        x = text[10:]
     elif text.startswith("what time is "):
         x = text[13:]
     elif text.startswith("what time am "):
         x = text[13:]
     elif text.startswith("what time are "):
         x = text[14:]
+    elif text.startswith("what time was "):
+        x = text[14:]
+    elif text.startswith("what time were "):
+        x = text[15:]
     elif text.startswith("where is "):
         x = text[9:]
     elif text.startswith("where am "):
@@ -432,11 +485,26 @@ def play( stri ):
 
     else:
         print(" I can find that song...")
-        print(str(Path.home())+"/Music/"+stri)
+        #print(str(Path.home())+"/Music/"+stri)
 
 def search(string):
     x = string.split(" ")
     open_file("https://www.google.com/search?q="+string.replace("%","%25").replace("+","%2B").replace(" ","+"))
+def google_com(str ,inp):
+    print(" I don't know anything about: "+inp)
+    print(" Do you want me to open a webrowser and google it for you?")
+    x = input("?> ")
+    if 'yes' in x.lower():
+        search(str)
+    else:
+        print(" Ok I won't")
+def google(str):
+    print(" Do you want me to open a webrowser and google: '" +str+ "' for you?")
+    x = input("?> ")
+    if 'yes' in x.lower():
+        search(str)
+    else:
+        print(" Ok I won't")
 def say( str ):
     "This processes text to be said"
     x = " "+str+" "
@@ -458,12 +526,66 @@ def say( str ):
 
     x = x.replace("//3*1", "my")
     x = x.replace("//3*2", "your")
-    
-    print(x.replace("$$@#¬¬¬"," "))
+    if "%SEARCH%" in str:
+        google(str.replace("%SEARCH%",""))
+    else:
+        print(x.replace("$$@#¬¬¬"," "))
     return
+def has_no(no):
+    if '0' in no:
+        return True
+    if '1' in no:
+        return True
+    if '2' in no:
+        return True
+    if '3' in no:
+        return True
+    if '4' in no:
+        return True
+    if '5' in no:
+        return True
+    if '6' in no:
+        return True
+    if '7' in no:
+        return True
+    if '8' in no:
+        return True
+    if '9' in no:
+        return True
+    return False
+def ask(str):
 
+    try:
+        data = wikipedia.summary(wikipedia.search(str)[0], sentences=3)
+    except wikipedia.exceptions.DisambiguationError:
+        data = ""
+    except IndexError:
+        data = ""
+
+    if ("value of" in str) and has_no(data) != True:
+        x = 2
+        while (has_no(data) != True) and (x<8):
+            x += 1
+            try:
+                data = wikipedia.summary(wikipedia.search(str)[0], sentences=x)
+            except wikipedia.exceptions.DisambiguationError:
+                data = ""
+            except IndexError:
+                data = ""
+        if x>7:
+            try:
+                data = wikipedia.summary(wikipedia.search(str)[0], sentences=3)
+            except wikipedia.exceptions.DisambiguationError:
+                data = ""
+            except IndexError:
+                data = ""
+    return data
+
+
+        
 info = {
-        "you": "Great Thanks!",
+        "you": "I'm Bob! I'm great Thanks!",
+        "your name": "I'm Bob and i must be Adrian.",
         }
 info_was = {
         }
@@ -474,6 +596,8 @@ location_was = {
         }
 
 time = {
+        }
+time_was = {"you born":"abc"
         }
 
 sims = {
@@ -486,9 +610,8 @@ dynamics = {'time': str(datetime.now()),
             "day": calendar.day_name[date.today().weekday()],
             "year": str(datetime.now()),
             "date": str(datetime.now()),
+            "weather": "%SEARCH%what is the weather"
             }
-
-
 
 
 try:
@@ -520,6 +643,12 @@ try:
     time = eval(data)
 except FileNotFoundError:
     print("[BOB] No Location file availible. Creating new one.")
+try:
+    data = open(str(Path.home())+"/"+".time_was.bob", 'r').read()
+    time_was = eval(data)
+except FileNotFoundError:
+    print("[BOB] No Location file availible. Creating new one.")
+
     
 #try:
 #    data2 = open(str(Path.home())+"/"+".sims.bob", 'r').read()
@@ -550,17 +679,10 @@ say("Hello I'm Bob!")
 
 os.chdir(str(Path.home()))
 
-def ask(str):
-    if "value of" in str:
-        return ""
-    try:
-        data = wikipedia.summary(wikipedia.search(str)[0], sentences=2)
-    except wikipedia.exceptions.DisambiguationError:
-        data = ""
-    except IndexError:
-        data = ""
-    return data
-    
+
+
+
+lastloc = "london"
 ########################################Main Loop###################################################################################################################
 while True:
     info["up"]="the sky"
@@ -696,13 +818,143 @@ while True:
         text = text[4:]
         nocap = nocap[4:]
 
+    
 ########################################################Section 2#########################################################################################################
 
+##########SEMI_PROCESS#########
+    if text.startswith("what ") and text.endswith(" is"):
+        x = text[5:len(text)-3]
+        text = "what is "+x
+    if text.startswith("what ") and text.endswith(" was"):
+        x = text[5:len(text)-4]
+        text = "what was "+x        
+    if text.startswith("who ") and text.endswith(" is"):
+        x = text[4:len(text)-3]
+        text = "who is "+x        
+    if text.startswith("who ") and text.endswith(" was"):
+        x = text[4:len(text)-4]
+        text = "who was "+x
+    if text.startswith("where ") and text.endswith(" is"):
+        x = text[6:len(text)-3]
+        text = "where is "+x
+    if text.startswith("where ") and text.endswith(" was"):
+        x = text[6:len(text)-4]
+        text = "where was "+x        
+    if text.startswith("when ") and text.endswith(" is"):
+        x = text[5:len(text)-3]
+        text = "when is "+x        
+    if text.startswith("when ") and text.endswith(" was"):
+        x = text[5:len(text)-4]
+        text = "when was "+x
 
+    
+    if text.startswith("what ") and " is it" in text:
+        if " is it " in text:
+            x = text[5:text.find(" is it ")]
+            text = "what is the "+x+text[text.find(" is it ")+6:]
+        else:
+            x = text[5:len(text)-6]
+            text = "what is the "+x
+        
 
+    if text.startswith("what ") and (not(text.startswith("what is "))) and (not(text.startswith("what are "))) and (not(text.startswith("what was "))) and (not(text.startswith("what were "))):
+        x = text[5:]
+        y = x.split(' ')
+        #print(y[0])
+        obj = y[0]
+        z = x[len(obj)+1:]
+        #print(z)
 
-#####Question  
-    if text.startswith("what "):
+        type = " is "
+        if " is " in text:
+            type=" is "
+        elif " are " in text:
+            type=" are "
+        elif " was " in text:
+            type=" was "
+        elif " were " in text:
+            type=" were "
+        text = "what"+type+obj+" that "+z
+        #print(text)
+    if text.startswith("who ") and (not(text.startswith("who is "))) and (not(text.startswith("who are "))) and (not(text.startswith("who was "))) and (not(text.startswith("who were "))):
+        x = text[4:]
+        y = x.split(' ')
+        #print(y[0])
+        obj = y[0]
+        z = x[len(obj)+1:]
+        #print(z)
+
+        type = " is "
+        if " is " in text:
+            type=" is "
+        elif " are " in text:
+            type=" are "
+        elif " was " in text:
+            type=" was "
+        elif " were " in text:
+            type=" were "
+        text = "who"+type+obj+" that "+z
+        #print(text)
+    if text.startswith("where ") and (not(text.startswith("where is "))) and (not(text.startswith("where are "))) and (not(text.startswith("where was "))) and (not(text.startswith("where were "))):
+        x = text[6:]
+        y = x.split(' ')
+        #print(y[0])
+        obj = y[0]
+        z = x[len(obj)+1:]
+        #print(z)
+
+        type = " is "
+        if " is " in text:
+            type=" is "
+        elif " are " in text:
+            type=" are "
+        elif " was " in text:
+            type=" was "
+        elif " were " in text:
+            type=" were "
+        text = "where"+type+obj+" that "+z
+        #print(text)
+    if text.startswith("when ") and (not(text.startswith("when is "))) and (not(text.startswith("when are "))) and (not(text.startswith("when was "))) and (not(text.startswith("when were "))):
+        x = text[5:]
+        y = x.split(' ')
+        #print(y[0])
+        obj = y[0]
+        z = x[len(obj)+1:]
+        #print(z)
+
+        type = " is "
+        if " is " in text:
+            type=" is "
+        elif " are " in text:
+            type=" are "
+        elif " was " in text:
+            type=" was "
+        elif " were " in text:
+            type=" were "
+        text = "when"+type+obj+" that "+z
+        #print(text)
+####loc
+    if text.startswith("i am in "):
+        lastloc = text[8:].lower()
+        location["i"] = lastloc
+    elif text.startswith("we are in "):
+        lastloc = text[10:].lower()
+        location["i"] = lastloc
+    elif text.startswith("i am currently in "):
+        lastloc = text[8:].lower()
+        location["i"] = lastloc
+    elif text.startswith("we are currently in "):
+        lastloc = text[10:].lower()
+        location["i"] = lastloc
+    elif text.startswith("i am now in "):
+        lastloc = text[8:].lower()
+        location["i"] = lastloc
+    elif text.startswith("we are now in "):
+        lastloc = text[10:].lower()
+        location["i"] = lastloc
+
+#####Question    
+    elif text.startswith("what "):
         x = q_split(text)
         if q_type(text) == "def1":
             y = q_t1_proc(x)
@@ -716,7 +968,7 @@ while True:
                     print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
                 else:
                     say("Sorry but, you don't know what "+y+" is.")
-        if q_type(text) == "def2":
+        elif q_type(text) == "def2":
             y = q_t1_proc(x)
             if y in info_was:
                 say(info_was[y])
@@ -728,7 +980,7 @@ while True:
                     print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
                 else:
                     say("Sorry but, you don't know what "+y+" was.")
-        if q_type(text) == "time1":
+        elif q_type(text) == "time1":
             y = q_t1_proc(x)
             if y in time:
                 say(time[y])
@@ -740,6 +992,9 @@ while True:
                     print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
                 else:
                     say("Sorry but, you don't know when "+y+" is.")
+        else:
+            google_com(text,text)
+            
     elif text.startswith("who "):
         x = q_split(text)
         if q_type(text) == "def1":
@@ -781,11 +1036,9 @@ while True:
             elif y in sims:            
                 say(location[sims[y]])
             else:
-                x = ask(nocap)
-                if x != "":
-                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
-                else:
-                    say("Sorry but, you don't know where "+y+" is.")
+                print(" Do I look like Siri to you?")
+                print(" Ok I will do it...")
+                google_com(text,text)
         if q_type(text) == "loc2":
             y = q_t1_proc(x)
             if y in location_was:
@@ -806,12 +1059,26 @@ while True:
         if text.endswith(" at"):
             text[:len(text)-3]
         x = q_split(text)
+        #print(q_type(text))
         if q_type(text) == "time1":
             y = q_t1_proc(x)
             if y in time:
                 say(time[y])
             elif y in sims:            
                 say(time[sims[y]])
+            else:
+                x = ask(nocap)
+                if x != "":
+                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                else:
+                    say("Sorry but, you don't know when "+y+" is.")
+        if q_type(text) == "time2":
+            #print(text)
+            y = q_t1_proc(x)
+            if y in time_was:
+                say(time_was[y])
+            elif y in sims:            
+                say(time_was[sims[y]])
             else:
                 x = ask(nocap)
                 if x != "":
@@ -885,6 +1152,8 @@ while True:
         except FileNotFoundError:
             if site_exists("http://"+(nocap.replace("http://","").replace("https://",""))):
                 open_file("http://"+(nocap.replace("http://","").replace("https://","")))
+            elif site_exists("http://"+(nocap.replace("http://","").replace("https://","")) + ".com"):
+                open_file("http://"+(nocap.replace("http://","").replace("https://","")) + ".com")
             else:
                 print(" Can't find the specified file/program.")
     elif text.startswith("run "):
@@ -919,6 +1188,10 @@ while True:
             if text.startswith(' "'):
                 break
         open_file(nocap)
+
+#####Music
+    elif text.startswith("play "):
+        play(nocap[5:])
 
 
 #####CD
@@ -1027,7 +1300,7 @@ while True:
                 f.write("{\n'say': ':Python:print(\"_input_\")',\n'echo': ':Python:print(\"_input_\")'\n}")
                 f.close()
                 f = open(str(Path.home())+"/"+".dynamics.bob","w")
-                f.write("{\n'time': str(datetime.now()), \n'day': calendar.day_name[date.today().weekday()], \n'year': str(datetime.now()), \n'date': str(datetime.now())\n}")
+                f.write("{\n'time': str(datetime.now()), \n'day': calendar.day_name[date.today().weekday()], \n'year': str(datetime.now()), \n'date': str(datetime.now()), \n'weather': '%SEARCH%what is the weather'}")
                 f.close()
                 #f = open(str(Path.home())+"/"+".dynamics_sims.bob","w")
                 #f.write("{\n\n}")
@@ -1076,6 +1349,10 @@ while True:
     e = open(str(Path.home())+"/"+".time.bob","w")
     e.write( str(time) )
     e.close()
+
+    g = open(str(Path.home())+"/"+".time_was.bob","w")
+    g.write( str(time) )
+    g.close()
 
     
 
