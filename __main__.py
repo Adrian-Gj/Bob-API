@@ -16,8 +16,8 @@ import requests
 from time import sleep
 from time import time as timé
 
-from lxml import html
-import wikipedia
+from libs.lxml import html
+import libs.wikipedia
 import libs.send2trash
 
 myname = "bob"
