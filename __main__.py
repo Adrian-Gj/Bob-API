@@ -9,117 +9,24 @@ import sys
 import getpass
 import shutil
 import subprocess
-import urllib.request
 import random
 from random import randrange
 import requests
 from time import sleep
 from time import time as timé
-
-from libs.lxml import html
+    
 import libs.wikipedia
-import libs.send2trash
+from libs.lxml import html
+
+from process import *
+from multimedia import *
+from cl import *
 
 myname = "bob"
 username = getpass.getuser()
 
 it = ""
 
-def istime(text):
-    timepts = 0
-    locpts = 0
-    if 'noon' in text:
-        timepts += 1
-    if 'afternoon' in text:
-        timepts += 1
-    if 'midnight' in text:
-        timepts += 1
-    if 'th of' in text:
-        timepts += 1
-    if 'january' in text:
-        timepts += 1
-    if 'february' in text:
-        timepts += 1
-    if 'march' in text:
-        timepts += 1
-    if 'april' in text:
-        timepts += 1
-    if 'may' in text:
-        timepts += 1
-    if 'june' in text:
-        timepts += 1
-    if 'july' in text:
-        timepts += 1
-    if 'august' in text:
-        timepts += 1
-    if 'september' in text:
-        timepts += 1
-    if 'november' in text:
-        timepts += 1
-    if 'december' in text:
-        timepts += 1
-    if 'monday' in text:
-        timepts += 1
-    if 'tuesday' in text:
-        timepts += 1
-    if 'wednesday' in text:
-        timepts += 1
-    if 'thursday' in text:
-        timepts += 1
-    if 'friday' in text:
-        timepts += 1
-    if 'saturday' in text:
-        timepts += 1
-    if 'sunday' in text:
-        timepts += 1
-    if ' day' in text:
-        timepts += 5
-    if 'day ' in text:
-        timepts += 5
-    if ' night' in text:
-        timepts += 5
-    if 'night ' in text:
-        timepts += 5
-    if text.endswith(" night"):
-        timepts += 40
-    if text.endswith(" day"):
-        timepts += 40
-    if text.endswith(" noon"):
-        timepts += 30
-    if text.endswith(" afternoon"):
-        timepts += 30
-    if text.endswith(" midnight"):
-        timepts += 30
-    if "1" in text:
-        timepts += 1
-    if "2" in text:
-        timepts += 1
-    if "3" in text:
-        timepts += 1
-    if "4" in text:
-        timepts += 1
-    if "5" in text:
-        timepts += 1
-    if "6" in text:
-        timepts += 1
-    if "7" in text:
-        timepts += 1
-    if "8" in text:
-        timepts += 1
-    if "9" in text:
-        timepts += 1
-
-        
-    if 'street' in text:
-        locpts += 20
-    if 'avenue' in text:
-        locpts += 20
-    if text.endswith(" street"):
-        locpts += 40
-    if text.endswith(" avenue"):
-        locpts += 40
-
-    return timepts>locpts
 def remember(text):
     global it
     thing = "x"
@@ -217,276 +124,11 @@ def remember(text):
     if input != "they":
         it = input
 
-def q_type(text):
-    if text.startswith("what is "):
-        return "def1"
-    elif text.startswith("what are "):
-        return "def1"
-    elif text.startswith("what am "):
-        return "def1"
-    elif text.startswith("what was "):
-        return "def2"
-    elif text.startswith("what were "):
-        return "def2"
-    elif text.startswith("who is "):
-        return "def1"
-    elif text.startswith("who are "):
-        return "def1"
-    elif text.startswith("what am "):
-        return "def1"
-    elif text.startswith("who was "):
-        return "def2"
-    elif text.startswith("who were "):
-        return "def2"
-    elif text.startswith("when is "):
-        return "time1"
-    elif text.startswith("when am "):
-        return "time1"
-    elif text.startswith("when are "):
-        return "time1"
-    elif text.startswith("when was "):
-        return "time2"
-    elif text.startswith("when were "):
-        return "time2"
-    elif text.startswith("what time is "):
-        return "time1"
-    elif text.startswith("what time am "):
-        return "time1"
-    elif text.startswith("what time are "):
-        return "time1"
-    elif text.startswith("what time was "):
-        return "time2"
-    elif text.startswith("what time were "):
-        return "time2"
-    elif text.startswith("where is "):
-        return "loc1"
-    elif text.startswith("where am "):
-        return "loc1"
-    elif text.startswith("where was "):
-        return "loc2"
-    elif text.startswith("how is "):
-        return "def1"
-    elif text.startswith("how are "):
-        return "def1"
-    elif text.startswith("how am "):
-        return "def1"
-    elif text.startswith("how was "):
-        return "def2"
-    elif text.startswith("how were "):
-        return "def2"
-
-
-def q_split(text):
-    x = ""
-    if text.startswith("what is "):
-        x = text[8:]
-    elif text.startswith("what are "):
-        x = text[9:]
-    if text.startswith("what am "):
-        x = text[8:]
-    elif text.startswith("what was "):
-        x = text[9:]
-    elif text.startswith("what were "):
-        x = text[10:]
-    elif text.startswith("who is "):
-        x = text[7:]
-    elif text.startswith("who are "):
-        x = text[8:]
-    elif text.startswith("who am "):
-        x = text[7:]
-    elif text.startswith("who was "):
-        x = text[8:]
-    elif text.startswith("who were "):
-        x = text[9:]
-    elif text.startswith("when is "):
-        x = text[8:]
-    elif text.startswith("when am "):
-        x = text[8:]
-    elif text.startswith("when are "):
-        x = text[9:]
-    elif text.startswith("when was "):
-        x = text[9:]
-    elif text.startswith("when were "):
-        x = text[10:]
-    elif text.startswith("what time is "):
-        x = text[13:]
-    elif text.startswith("what time am "):
-        x = text[13:]
-    elif text.startswith("what time are "):
-        x = text[14:]
-    elif text.startswith("what time was "):
-        x = text[14:]
-    elif text.startswith("what time were "):
-        x = text[15:]
-    elif text.startswith("where is "):
-        x = text[9:]
-    elif text.startswith("where am "):
-        x = text[9:]
-    elif text.startswith("where was "):
-        x = text[10:]
-    elif text.startswith("how is "):
-        x = text[7:]
-    elif text.startswith("how are "):
-        x = text[8:]
-    elif text.startswith("how am "):
-        x = text[7:]
-    elif text.startswith("how was "):
-        x = text[8:]
-    elif text.startswith("how were "):
-        x = text[9:]
-
-    if x == "it":
-        x=it
-    if x == "they":
-        x=it
-    return x
-
-def q_t1_proc(text):
     x = text
     x = x.replace("the ", "")
     x = x.replace("current ", "")
     x = x.replace("value of ", "")
     return x
-def site_exists(url):
-    """
-    Checks that a given URL is reachable.
-    :param url: A URL
-    :rtype: bool
-    """
-    request = urllib.request.Request(url)
-    request.get_method = lambda: 'HEAD'
-
-    try:
-        urllib.request.urlopen(request)
-        return True
-    except urllib.request.HTTPError:
-        return False
-    except urllib.error.URLError:
-        return False
-    except socket.gaierror:
-        return False
-def mkdir(name):
-    try:
-        os.makedirs(name)
-    except OSError:
-        return 
-def copy(src, dst, symlinks=False, ignore=None):
-    x = os.path.basename(src)
-    y = dst + ""
-    if os.path.isdir(src):
-        shutil.copytree(src, os.path.join(dst,x), symlinks, ignore)
-    else:
-        shutil.copy2(src, dst)
-def open_file(filename):
-    if sys.platform == "win32":
-        os.startfile(filename)
-    else:
-        opener ="open" if sys.platform == "darwin" else "xdg-open"
-        subprocess.call([opener, filename])
-
-def findnth(string, substring, n):
-    parts = string.split(substring, n + 1)
-    if len(parts) <= n + 1:
-        return -1
-    return len(string) - len(parts[-1]) - len(substring)
-
-print("Bob Shell version 1.0")
-def play( stri ):
-    "Play"
-    x = ""
-            
-    if os.path.isfile(stri):
-        open_file(x+stri)
-    elif os.path.isfile(str(Path.home())+"/Music/"+stri):
-        open_file(x+(str(Path.home())+"/Music/"+stri))
-        
-    elif os.path.isfile(stri+".mp3"):
-        open_file(x+stri+".mp3")
-    elif os.path.isfile(str(Path.home())+"/Music/"+stri+".mp3"):
-        open_file(x+(str(Path.home())+"/Music/"+stri+".mp3"))
-
-    elif os.path.isfile(stri+".mp2"):
-        open_file(x+stri+".mp2")
-    elif os.path.isfile(str(Path.home())+"/Music/"+stri+".mp2"):
-        open_file(x+(str(Path.home())+"/Music/"+stri+".mp2"))
-
-    elif os.path.isfile(stri+".wav"):
-        open_file(x+stri+".wav")
-    elif os.path.isfile(str(Path.home())+"/Music/"+stri+".wav"):
-        open_file(x+(str(Path.home())+"/Music/"+stri+".wav"))
-
-    elif os.path.isfile(stri+".au"):
-        open_file(x+stri+".au")
-    elif os.path.isfile(str(Path.home())+"/Music/"+stri+".au"):
-        open_file(x+(str(Path.home())+"/Music/"+stri+".au"))
-
-    elif os.path.isfile(stri+".ogg"):
-        open_file(x+stri+".ogg")
-    elif os.path.isfile(str(Path.home())+"/Music/"+stri+".ogg"):
-        open_file(x+(str(Path.home())+"/Music/"+stri+".ogg"))
-
-    elif os.path.isfile(stri+".wma"):
-        open_file(x+stri+".wma")
-    elif os.path.isfile(str(Path.home())+"/Music/"+stri+".wma"):
-        open_file(x+(str(Path.home())+"/Music/"+stri+".wma"))
-
-
-    elif os.path.isfile(str(Path.home())+"/Videos/"+stri):
-        open_file(x+(str(Path.home())+"/Videos/"+stri))
-        
-    elif os.path.isfile(stri+".mp3"):
-        open_file(x+stri+".mp3")
-    elif os.path.isfile(str(Path.home())+"/Videos/"+stri+".mp3"):
-        open_file(x+(str(Path.home())+"/Videos/"+stri+".mp3"))
-
-    elif os.path.isfile(stri+".mp2"):
-        open_file(x+stri+".mp2")
-    elif os.path.isfile(str(Path.home())+"/Videos/"+stri+".mp2"):
-        open_file(x+(str(Path.home())+"/Videos/"+stri+".mp2"))
-
-    elif os.path.isfile(stri+".wav"):
-        open_file(x+stri+".wav")
-    elif os.path.isfile(str(Path.home())+"/Videos/"+stri+".wav"):
-        open_file(x+(str(Path.home())+"/Videos/"+stri+".wav"))
-
-    elif os.path.isfile(stri+".au"):
-        open_file(x+stri+".au")
-    elif os.path.isfile(str(Path.home())+"/Videos/"+stri+".au"):
-        open_file(x+(str(Path.home())+"/Videos/"+stri+".au"))
-
-    elif os.path.isfile(stri+".ogg"):
-        open_file(x+stri+".ogg")
-    elif os.path.isfile(str(Path.home())+"/Videos/"+stri+".ogg"):
-        open_file(x+(str(Path.home())+"/Videos/"+stri+".ogg"))
-
-    elif os.path.isfile(stri+".wma"):
-        open_file(x+stri+".wma")
-    elif os.path.isfile(str(Path.home())+"/Videos/"+stri+".wma"):
-        open_file(x+(str(Path.home())+"/Videos/"+stri+".wma"))
-
-
-    else:
-        print(" I can find that song...")
-        #print(str(Path.home())+"/Music/"+stri)
-
-def search(string):
-    x = string.split(" ")
-    open_file("https://www.google.com/search?q="+string.replace("%","%25").replace("+","%2B").replace(" ","+"))
-def google_com(str ,inp):
-    print(" I don't know anything about: "+inp)
-    print(" Do you want me to open a webrowser and google it for you?")
-    x = input("?> ")
-    if 'yes' in x.lower():
-        search(str)
-    else:
-        print(" Ok I won't")
-def google(str):
-    print(" Do you want me to open a webrowser and google: '" +str+ "' for you?")
-    x = input("?> ")
-    if 'yes' in x.lower():
-        search(str)
-    else:
-        print(" Ok I won't")
 def say( str ):
     "This processes text to be said"
     x = " "+str+" "
@@ -519,57 +161,8 @@ def say( str ):
     else:
         print(x.replace("$$@#¬¬¬"," "))
     return
-def has_no(no):
-    if '0' in no:
-        return True
-    if '1' in no:
-        return True
-    if '2' in no:
-        return True
-    if '3' in no:
-        return True
-    if '4' in no:
-        return True
-    if '5' in no:
-        return True
-    if '6' in no:
-        return True
-    if '7' in no:
-        return True
-    if '8' in no:
-        return True
-    if '9' in no:
-        return True
-    return False
-def ask(str):
 
-    try:
-        data = wikipedia.summary(wikipedia.search(str)[0], sentences=3)
-    except wikipedia.exceptions.DisambiguationError:
-        data = ""
-    except IndexError:
-        data = ""
-
-    if ("value of" in str) and has_no(data) != True:
-        x = 2
-        while (has_no(data) != True) and (x<8):
-            x += 1
-            try:
-                data = wikipedia.summary(wikipedia.search(str)[0], sentences=x)
-            except wikipedia.exceptions.DisambiguationError:
-                data = ""
-            except IndexError:
-                data = ""
-        if x>7:
-            try:
-                data = wikipedia.summary(wikipedia.search(str)[0], sentences=3)
-            except wikipedia.exceptions.DisambiguationError:
-                data = ""
-            except IndexError:
-                data = ""
-    return data
-
-
+print("Bob Shell version 1.0")
         
 info = {
         "you": "I'm Bob! I'm great Thanks!",
@@ -638,6 +231,7 @@ try:
     time = eval(data)
 except FileNotFoundError:
     print("[BOB] No Location file availible. Creating new one.")
+
 try:
     data = open(str(Path.home())+"/"+".time_was.bob", 'r').read()
     time_was = eval(data)
@@ -674,13 +268,12 @@ say("Hello I'm Bob!")
 
 os.chdir(str(Path.home()))
 
-
-
 if "@@2&*$£DASNNNOOOó" in info:
     if info["@@2&*$£DASNNNOOOó"] == "Meow":
         print("\n\n\n\n\n\n\n the fox says meow...\n\n\n\n\n\n\n")
         info["@@2&*$£DASNNNOOOó"] = "Woof"
 lastloc = "london"
+
 ########################################Main Loop###################################################################################################################
 while True:
     info["up"]="the sky"
@@ -1302,8 +895,8 @@ while True:
         nocap = nocap[7:]
         x = False
         if text.startswith("a "):
-            text = text[1:]
-            nocap = nocap[1:]
+            text = text[2:]
+            nocap = nocap[2:]
         if text.startswith("directory "):
             text = text[10:]
             nocap = nocap[10:]
@@ -1333,7 +926,7 @@ while True:
             if text.startswith("that is "):
                 text = text[8:]
                 nocap = nocap[8:]
-        os.system("mkdir "+nocap)
+        mkdir(text)
         
     elif text.startswith("delete "):
         text = text[7:]
