@@ -1,0 +1,73 @@
+import libs.wikipedia
+def mine( stri , name):
+    text = stri
+    text = text.lower()
+    text = text.replace(".0", ":0")\
+           .replace(".1", ":1")\
+           .replace(".2", ":2")\
+           .replace(".3", ":3")\
+           .replace(".4", ":4")\
+           .replace(".5", ":5")\
+           .replace(".6", ":6")\
+           .replace(".7", ":7")\
+           .replace(".8", ":8")\
+           .replace(".9", ":9")\
+           .replace(". ", ".")\
+           .replace(",", "")\
+           .replace("  ", " ")\
+           .replace(" are ", " is ")\
+           .replace(" is also ", " is ")\
+           .replace(" were ", " was ")\
+           .replace(" was also ", " was ")\
+           .replace(" who is", "."+name+" is")\
+           .replace(" he is", "."+name+" is")\
+           .replace(" she is", "."+name+" is")\
+           .replace(" it is", "."+name+" is")\
+           .replace(".he is", "."+name+" is")\
+           .replace(".she is", "."+name+" is")\
+           .replace(".it is", "."+name+" is")\
+           .replace(" they is", "."+name+" is")\
+           .replace(" is ", ">1>2>")\
+           .replace("\n", ".")
+    x = text.split(".")
+    #print(text)
+    out = []
+    for item in x:
+        sent = ""
+        skip = False
+        for let in item:
+            if let == "(":
+                skip = True
+            if let == ";":
+                skip = True
+            if not skip:
+                sent += let
+            if let == ")":
+                skip = False
+
+        sent = sent.replace("  "," ").replace(" >1>2>",">1>2>").replace("(","").replace(")","")
+        #print(sent)
+        if ">1>2>" in sent:
+            out.append(sent)
+    name2 = out[0].split(">1>2>")[0]
+    out = [out.replace(name2,name) for out in out]
+    out = [out.replace("he>1>2>",name+">1>2>") for out in out]
+    out = [out.replace("she>1>2>",name+">1>2>") for out in out]
+    out = [out.replace("it>1>2>",name+">1>2>") for out in out]
+    out = [out.replace("they>1>2>",name+">1>2>") for out in out]
+    out = [name+">1>2>"+out.split(">1>2>")[1] for out in out]
+    print(name)
+    print(name2)
+    print("")
+    print('\n'.join(map(str, out)))
+    
+        
+data = ""
+try:
+    data = libs.wikipedia.summary("Linux",sentences=10)
+except libs.wikipedia.exceptions.DisambiguationError:
+    data = ""
+except IndexError:
+    data = ""
+print(mine(data,"Linux"))
+#print(data)

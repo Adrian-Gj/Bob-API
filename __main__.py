@@ -186,7 +186,6 @@ sims = {
 
 commands = {'say': 'echo',
             'echo': 'echo',
-            
             }
 
 dynamics = {"time": "str(datetime.now())",
@@ -1050,27 +1049,27 @@ while True:
 #####Complex Commands
     elif text[0:findnth(text," ",3)] in commands:
         if commands[text[0:findnth(text," ",3)]].startswith(":Python:"):
-            eval(commands[text[0:findnth(text," ",3)]][8:].replace("_input_",nocap[findnth(nocap," ",3)+1:].replace("\\","\\\\").replace('"','\\\"').replace("'",'\\\'')))
+            exec(commands[text[0:findnth(text," ",3)]][8:].replace("_input_",nocap[findnth(nocap," ",3)+1:].replace("\\","\\\\").replace('"','\\\"').replace("'",'\\\'')))
         else:
             os.system(commands[text[0:findnth(text," ",2)]] + " " + nocap[findnth(nocap," ",2)+1:])
     elif text[0:findnth(text," ",2)] in commands:
         if commands[text[0:findnth(text," ",2)]].startswith(":Python:"):
-            eval(commands[text[0:findnth(text," ",2)]][8:].replace("_input_",nocap[findnth(nocap," ",2)+1:].replace("\\","\\\\").replace('"','\\\"').replace("'",'\\\'')))
+            exec(commands[text[0:findnth(text," ",2)]][8:].replace("_input_",nocap[findnth(nocap," ",2)+1:].replace("\\","\\\\").replace('"','\\\"').replace("'",'\\\'')))
         else:
             os.system(commands[text[0:findnth(text," ",2)]] + " " + nocap[findnth(nocap," ",2)+1:])
     elif text[0:findnth(text," ",1)] in commands:
         if commands[text[0:findnth(text," ",1)]].startswith(":Python:"):
-            eval(commands[text[0:findnth(text," ",1)]][8:].replace("_input_",nocap[findnth(nocap," ",1)+1:].replace("\\","\\\\").replace('"','\\\"').replace("'",'\\\'')))
+            exec(commands[text[0:findnth(text," ",1)]][8:].replace("_input_",nocap[findnth(nocap," ",1)+1:].replace("\\","\\\\").replace('"','\\\"').replace("'",'\\\'')))
         else:
             os.system(commands[text[0:findnth(text," ",1)]] + " " + nocap[findnth(nocap," ",1)+1:])
     elif text[0:text.find(" ")] in commands:
         if commands[text[0:text.find(" ")]].startswith(":Python:"):
-            eval(commands[text[0:text.find(" ")]][8:].replace("_input_",nocap[nocap.find(" ")+1:].replace("\\","\\\\").replace('"','\\\"').replace("'",'\\\'')))
+            exec(commands[text[0:text.find(" ")]][8:].replace("_input_",nocap[nocap.find(" ")+1:].replace("\\","\\\\").replace('"','\\\"').replace("'",'\\\'')))
         else:
             os.system(commands[text[0:text.find(" ")]] + " " + nocap[nocap.find(" ")+1:])
     elif text in commands:
         if commands[text].startswith(":Python:"):
-            eval(commands[text][8:].replace("_input_",""))
+            exec(commands[text][8:].replace("_input_",""))
         else:
             os.system(commands[text])  
         
