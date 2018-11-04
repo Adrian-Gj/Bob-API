@@ -579,9 +579,14 @@ while True:
             elif y in sims:            
                 say(info[sims[y]])
             else:
-                data = libs.wikipedia.summary(libs.wikipedia.search(nocap)[0], sentences=10)
+                data = libs.wikipedia.page(libs.wikipedia.search(nocap)[0]).content
                 if x != "":
-                    print(" "+mine(data))
+                    mined = mine(data)
+                    print(mined)
+                    question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
+                    if "yes" in question.lower():
+                        print("ok")
+                        remember(y + " is "+mined)
                 else:
                     say("Sorry but, you don't know what "+y+" is.")
         elif q_type(text) == "def2":
@@ -591,9 +596,14 @@ while True:
             elif y in sims:            
                 say(info_was[sims[y]])
             else:
-                data = libs.wikipedia.summary(libs.wikipedia.search(nocap)[0], sentences=10)
+                data = libs.wikipedia.page(libs.wikipedia.search(nocap)[0]).content
                 if x != "":
-                    print(" "+mine(data))
+                    mined = mine(data)
+                    print(mined)
+                    question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
+                    if "yes" in question.lower():
+                        print("ok")
+                        remember(y + " was "+mined)
                 else:
                     say("Sorry but, you don't know what "+y+" is.")
         elif q_type(text) == "time1":
@@ -603,9 +613,14 @@ while True:
             elif y in sims:            
                 say(time[sims[y]])
             else:
-                data = libs.wikipedia.summary(libs.wikipedia.search(nocap)[0], sentences=10)
+                data = libs.wikipedia.page(libs.wikipedia.search(nocap)[0]).content
                 if x != "":
-                    print(" "+mine(data))
+                    mined = mine_time(data)
+                    print(mined)
+                    question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
+                    if "yes" in question.lower():
+                        print("ok")
+                        remember(y + " is on "+mined)
                 else:
                     say("Sorry but, you don't know what "+y+" is.")
         else:
@@ -620,9 +635,14 @@ while True:
             elif y in sims:            
                 say(info[sims[y]])
             else:
-                data = libs.wikipedia.summary(libs.wikipedia.search(nocap)[0], sentences=10)
+                data = libs.wikipedia.page(libs.wikipedia.search(nocap)[0]).content
                 if x != "":
-                    print(" "+mine(data))
+                    mined = mine(data)
+                    print(mined)
+                    question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
+                    if "yes" in question.lower():
+                        print("ok")
+                        remember(y + " is "+mined)
                 else:
                     say("Sorry but, you don't know what "+y+" is.")
         if q_type(text) == "def2":
@@ -632,9 +652,14 @@ while True:
             elif y in sims:            
                 say(info_was[sims[y]])
             else:
-                data = libs.wikipedia.summary(libs.wikipedia.search(nocap)[0], sentences=10)
+                data = libs.wikipedia.page(libs.wikipedia.search(nocap)[0]).content
                 if x != "":
-                    print(" "+mine(data))
+                    mined = mine(data)
+                    print(mined)
+                    question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
+                    if "yes" in question.lower():
+                        print("ok")
+                        remember(y + " was "+mined)
                 else:
                     say("Sorry but, you don't know what "+y+" is.")
     elif text.startswith("where "):
@@ -662,9 +687,14 @@ while True:
             elif y in sims:            
                 say(location_was[sims[y]])
             else:
-                data = libs.wikipedia.summary(libs.wikipedia.search(nocap)[0], sentences=10)
+                data = libs.wikipedia.page(libs.wikipedia.search(nocap)[0]).content
                 if x != "":
-                    print(" "+mine(data))
+                    mined = mine(data)
+                    print(mined)
+                    question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
+                    if "yes" in question.lower():
+                        print("ok")
+                        remember(y + " was in "+mined)
                 else:
                     say("Sorry but, you don't know what "+y+" is.")
     elif text.startswith("when "):
@@ -683,9 +713,14 @@ while True:
             elif y in sims:            
                 say(time[sims[y]])
             else:
-                x = ask(nocap)
+                data = libs.wikipedia.page(libs.wikipedia.search(nocap)[0]).content
                 if x != "":
-                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                    mined = mine_time(data)
+                    print(mined)
+                    question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
+                    if "yes" in question.lower():
+                        print("ok")
+                        remember(y + " is on "+mined)
                 else:
                     say("Sorry but, you don't know when "+y+" is.")
         if q_type(text) == "time2":
@@ -696,9 +731,14 @@ while True:
             elif y in sims:            
                 say(time_was[sims[y]])
             else:
-                x = ask(nocap)
+                data = libs.wikipedia.page(libs.wikipedia.search(nocap)[0]).content
                 if x != "":
-                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                    mined = mine_time(data)
+                    print(mined)
+                    question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
+                    if "yes" in question.lower():
+                        print("ok")
+                        remember(y + " was on "+mined)
                 else:
                     say("Sorry but, you don't know when "+y+" is.")
     elif text.startswith("how "):
@@ -710,9 +750,14 @@ while True:
             elif y in sims:            
                 say(info[sims[y]])
             else:
-                x = ask(nocap)
+                data = libs.wikipedia.page(libs.wikipedia.search(nocap)[0]).content
                 if x != "":
-                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                    mined = mine(data)
+                    print(mined)
+                    question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
+                    if "yes" in question.lower():
+                        print("ok")
+                        remember(y + " is "+mined)
                 else:
                     say("Sorry but, you don't know how "+y+" is.")
         if q_type(text) == "def2":
@@ -722,9 +767,14 @@ while True:
             elif y in sims:            
                 say(info_was[sims[y]])
             else:
-                x = ask(nocap)
+                data = libs.wikipedia.page(libs.wikipedia.search(nocap)[0]).content
                 if x != "":
-                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                    mined = mine(data)
+                    print(mined)
+                    question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
+                    if "yes" in question.lower():
+                        print("ok")
+                        remember(y + " was "+mined)
                 else:
                     say("Sorry but, you don't know how "+y+" was.")
 
