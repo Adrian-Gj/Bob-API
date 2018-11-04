@@ -125,7 +125,9 @@ def mine( stri):
         x = x[1:]
     return x
 	
-def mine_time( stri):
+def mine_time( stri, search):
+    s = search.split(" ")
+    while "the" in s : s.remove(the)
     name = "x"
     text = stri
     text = text.lower()
@@ -217,7 +219,7 @@ def mine_time( stri):
     count = 0
     a = ""
     while count<len(out):
-        if istime(out[count].split(">1>2>")[1]):
+        if istime(out[count].split(">1>2>")[1]) and bool(set(out[count].split(">1>2>")[1].split(" ")) & set(s)):
             a += out[count].split(">1>2>")[1]
             break;
         count += 1

@@ -583,10 +583,28 @@ while True:
                 if x != "":
                     mined = mine(data)
                     print(mined)
+                    print("")
                     question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
                     if "yes" in question.lower():
                         print("ok")
                         remember(y + " is "+mined)
+                    else:
+                        print(" I had also found out about:")
+                        data2 = libs.wikipedia.search(nocap)
+                        a = 0
+                        for item in data2:
+                            print(" "+str(a)+": "+item)
+                            a+=1
+                        question2 = input(" Does one meet your requirements?\n If so which one?(must contain 'yes')\n?> ")
+                        if "yes" in question2.lower():
+                            print("Well that is good.")
+                            z = int(question2.replace(" ","").replace("yes",""))
+                            print(" Ok so this is what I found out about: "+data2[z])
+                            print(mine(libs.wikipedia.page(data2[z]).content))
+                            question = input("\n Do you want me to remember this as the answer to the previous question?\n?> ")
+                            if "yes" in question.lower():
+                                print("ok")
+                                remember(y + " is "+mine(libs.wikipedia.page(data2[z]).content))
                 else:
                     say("Sorry but, you don't know what "+y+" is.")
         elif q_type(text) == "def2":
@@ -600,10 +618,28 @@ while True:
                 if x != "":
                     mined = mine(data)
                     print(mined)
+                    print("")
                     question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
                     if "yes" in question.lower():
                         print("ok")
                         remember(y + " was "+mined)
+                    else:
+                        print(" I had also found out about:")
+                        data2 = libs.wikipedia.search(nocap)
+                        a = 0
+                        for item in data2:
+                            print(" "+str(a)+": "+item)
+                            a+=1
+                        question2 = input(" Does one meet your requirements?\n If so which one?(must contain 'yes')\n?> ")
+                        if "yes" in question2.lower():
+                            print("Well that is good.")
+                            z = int(question2.replace(" ","").replace("yes",""))
+                            print(" Ok so this is what I found out about: "+data2[z])
+                            print(mine(libs.wikipedia.page(data2[z]).content))
+                            question = input("\n Do you want me to remember this as the answer to the previous question?\n?> ")
+                            if "yes" in question.lower():
+                                print("ok")
+                                remember(y + " was "+mine(libs.wikipedia.page(data2[z]).content))
                 else:
                     say("Sorry but, you don't know what "+y+" is.")
         elif q_type(text) == "time1":
@@ -615,12 +651,30 @@ while True:
             else:
                 data = libs.wikipedia.page(libs.wikipedia.search(nocap)[0]).content
                 if x != "":
-                    mined = mine_time(data)
+                    mined = mine_time(data,x)
                     print(mined)
+                    print("")
                     question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
                     if "yes" in question.lower():
                         print("ok")
                         remember(y + " is on "+mined)
+                    else:
+                        print(" I had also found out about:")
+                        data2 = libs.wikipedia.search(nocap)
+                        a = 0
+                        for item in data2:
+                            print(" "+str(a)+": "+item)
+                            a+=1
+                        question2 = input(" Does one meet your requirements?\n If so which one?(must contain 'yes')\n?> ")
+                        if "yes" in question2.lower():
+                            print("Well that is good.")
+                            z = int(question2.replace(" ","").replace("yes",""))
+                            print(" Ok so this is what I found out about: "+data2[z])
+                            print(mine_time(libs.wikipedia.page(data2[z]).content),x)
+                            question = input("\n Do you want me to remember this as the answer to the previous question?\n?> ")
+                            if "yes" in question.lower():
+                                print("ok")
+                                remember(y + " is on "+mine_time(libs.wikipedia.page(data2[z]).content),x)
                 else:
                     say("Sorry but, you don't know what "+y+" is.")
         else:
@@ -639,10 +693,28 @@ while True:
                 if x != "":
                     mined = mine(data)
                     print(mined)
+                    print("")
                     question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
                     if "yes" in question.lower():
                         print("ok")
                         remember(y + " is "+mined)
+                    else:
+                        print(" I had also found out about:")
+                        data2 = libs.wikipedia.search(nocap)
+                        a = 0
+                        for item in data2:
+                            print(" "+str(a)+": "+item)
+                            a+=1
+                        question2 = input(" Does one meet your requirements?\n If so which one?(must contain 'yes')\n?> ")
+                        if "yes" in question2.lower():
+                            print("Well that is good.")
+                            z = int(question2.replace(" ","").replace("yes",""))
+                            print(" Ok so this is what I found out about: "+data2[z])
+                            print(mine(libs.wikipedia.page(data2[z]).content))
+                            question = input("\n Do you want me to remember this as the answer to the previous question?\n?> ")
+                            if "yes" in question.lower():
+                                print("ok")
+                                remember(y + " is "+mine(libs.wikipedia.page(data2[z]).content))
                 else:
                     say("Sorry but, you don't know what "+y+" is.")
         if q_type(text) == "def2":
@@ -656,10 +728,28 @@ while True:
                 if x != "":
                     mined = mine(data)
                     print(mined)
+                    print("")
                     question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
                     if "yes" in question.lower():
                         print("ok")
                         remember(y + " was "+mined)
+                    else:
+                        print(" I had also found out about:")
+                        data2 = libs.wikipedia.search(nocap)
+                        a = 0
+                        for item in data2:
+                            print(" "+str(a)+": "+item)
+                            a+=1
+                        question2 = input(" Does one meet your requirements?\n If so which one?(must contain 'yes')\n?> ")
+                        if "yes" in question2.lower():
+                            print("Well that is good.")
+                            z = int(question2.replace(" ","").replace("yes",""))
+                            print(" Ok so this is what I found out about: "+data2[z])
+                            print(mine(libs.wikipedia.page(data2[z]).content))
+                            question = input("\n Do you want me to remember this as the answer to the previous question?\n?> ")
+                            if "yes" in question.lower():
+                                print("ok")
+                                remember(y + " was " + mine(libs.wikipedia.page(data2[z]).content) )
                 else:
                     say("Sorry but, you don't know what "+y+" is.")
     elif text.startswith("where "):
@@ -691,10 +781,28 @@ while True:
                 if x != "":
                     mined = mine(data)
                     print(mined)
+                    print("")
                     question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
                     if "yes" in question.lower():
                         print("ok")
                         remember(y + " was in "+mined)
+                    else:
+                        print(" I had also found out about:")
+                        data2 = libs.wikipedia.search(nocap)
+                        a = 0
+                        for item in data2:
+                            print(" "+str(a)+": "+item)
+                            a+=1
+                        question2 = input(" Does one meet your requirements?\n If so which one?(must contain 'yes')\n?> ")
+                        if "yes" in question2.lower():
+                            print("Well that is good.")
+                            z = int(question2.replace(" ","").replace("yes",""))
+                            print(" Ok so this is what I found out about: "+data2[z])
+                            print(mine(libs.wikipedia.page(data2[z]).content))
+                            question = input("\n Do you want me to remember this as the answer to the previous question?\n?> ")
+                            if "yes" in question.lower():
+                                print("ok")
+                                remember(y + " was in "+mine(libs.wikipedia.page(data2[z]).content))
                 else:
                     say("Sorry but, you don't know what "+y+" is.")
     elif text.startswith("when "):
@@ -715,12 +823,30 @@ while True:
             else:
                 data = libs.wikipedia.page(libs.wikipedia.search(nocap)[0]).content
                 if x != "":
-                    mined = mine_time(data)
+                    mined = mine_time(data,x)
                     print(mined)
+                    print("")
                     question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
                     if "yes" in question.lower():
                         print("ok")
                         remember(y + " is on "+mined)
+                    else:
+                        print(" I had also found out about:")
+                        data2 = libs.wikipedia.search(nocap)
+                        a = 0
+                        for item in data2:
+                            print(" "+str(a)+": "+item)
+                            a+=1
+                        question2 = input(" Does one meet your requirements?\n If so which one?(must contain 'yes')\n?> ")
+                        if "yes" in question2.lower():
+                            print("Well that is good.")
+                            z = int(question2.replace(" ","").replace("yes",""))
+                            print(" Ok so this is what I found out about: "+data2[z])
+                            print(mine_time(libs.wikipedia.page(data2[z]).content,x))
+                            question = input("\n Do you want me to remember this as the answer to the previous question?\n?> ")
+                            if "yes" in question.lower():
+                                print("ok")
+                                remember(y + " is on "+mine_time(libs.wikipedia.page(data2[z]).content,x))
                 else:
                     say("Sorry but, you don't know when "+y+" is.")
         if q_type(text) == "time2":
@@ -733,12 +859,30 @@ while True:
             else:
                 data = libs.wikipedia.page(libs.wikipedia.search(nocap)[0]).content
                 if x != "":
-                    mined = mine_time(data)
+                    mined = mine_time(data,x)
                     print(mined)
+                    print("")
                     question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
                     if "yes" in question.lower():
                         print("ok")
                         remember(y + " was on "+mined)
+                    else:
+                        print(" I had also found out about:")
+                        data2 = libs.wikipedia.search(nocap)
+                        a = 0
+                        for item in data2:
+                            print(" "+str(a)+": "+item)
+                            a+=1
+                        question2 = input(" Does one meet your requirements?\n If so which one?(must contain 'yes')\n?> ")
+                        if "yes" in question2.lower():
+                            print("Well that is good.")
+                            z = int(question2.replace(" ","").replace("yes",""))
+                            print(" Ok so this is what I found out about: "+data2[z])
+                            print(mine_time(libs.wikipedia.page(data2[z]).content),x)
+                            question = input("\n Do you want me to remember this as the answer to the previous question?\n?> ")
+                            if "yes" in question.lower():
+                                print("ok")
+                                remember(y + " was on "+mine_time(libs.wikipedia.page(data2[z]).content,x))
                 else:
                     say("Sorry but, you don't know when "+y+" is.")
     elif text.startswith("how "):
@@ -754,10 +898,28 @@ while True:
                 if x != "":
                     mined = mine(data)
                     print(mined)
+                    print("")
                     question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
                     if "yes" in question.lower():
                         print("ok")
                         remember(y + " is "+mined)
+                    else:
+                        print(" I had also found out about:")
+                        data2 = libs.wikipedia.search(nocap)
+                        a = 0
+                        for item in data2:
+                            print(" "+str(a)+": "+item)
+                            a+=1
+                        question2 = input(" Does one meet your requirements?\n If so which one?(must contain 'yes')\n?> ")
+                        if "yes" in question2.lower():
+                            print("Well that is good.")
+                            z = int(question2.replace(" ","").replace("yes",""))
+                            print(" Ok so this is what I found out about: "+data2[z])
+                            print(mine(libs.wikipedia.page(data2[z]).content))
+                            question = input("\n Do you want me to remember this as the answer to the previous question?\n?> ")
+                            if "yes" in question.lower():
+                                print("ok")
+                                remember(y + " is "+mine(libs.wikipedia.page(data2[z]).content))
                 else:
                     say("Sorry but, you don't know how "+y+" is.")
         if q_type(text) == "def2":
@@ -771,10 +933,28 @@ while True:
                 if x != "":
                     mined = mine(data)
                     print(mined)
+                    print("")
                     question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
                     if "yes" in question.lower():
                         print("ok")
                         remember(y + " was "+mined)
+                    else:
+                        print(" I had also found out about:")
+                        data2 = libs.wikipedia.search(nocap)
+                        a = 0
+                        for item in data2:
+                            print(" "+str(a)+": "+item)
+                            a+=1
+                        question2 = input(" Does one meet your requirements?\n If so which one?(must contain 'yes')\n?> ")
+                        if "yes" in question2.lower():
+                            print("Well that is good.")
+                            z = int(question2.replace(" ","").replace("yes",""))
+                            print(" Ok so this is what I found out about: "+data2[z])
+                            print(mine(libs.wikipedia.page(data2[z]).content))
+                            question = input("\n Do you want me to remember this as the answer to the previous question?\n?> ")
+                            if "yes" in question.lower():
+                                print("ok")
+                                remember(y + " was "+mine(libs.wikipedia.page(data2[z]).content))
                 else:
                     say("Sorry but, you don't know how "+y+" was.")
 
