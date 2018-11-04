@@ -1,5 +1,6 @@
 import libs.wikipedia
-def mine( stri , name):
+def mine( stri):
+    name = "x"
     text = stri
     text = text.lower()
     text = text.replace(".0", ":0")\
@@ -15,7 +16,6 @@ def mine( stri , name):
            .replace(". ", ".")\
            .replace(",", "")\
            .replace("  ", " ")\
-           .replace(" are ", " is ")\
            .replace(" is also ", " is ")\
            .replace(" were ", " was ")\
            .replace(" was also ", " was ")\
@@ -27,7 +27,15 @@ def mine( stri , name):
            .replace(".she is", "."+name+" is")\
            .replace(".it is", "."+name+" is")\
            .replace(" they is", "."+name+" is")\
-           .replace(" is ", ">1>2>")\
+           .replace(" are also ", " are ")\
+           .replace(" who are", "."+name+" are")\
+           .replace(" he are", "."+name+" are")\
+           .replace(" she are", "."+name+" are")\
+           .replace(" it are", "."+name+" are")\
+           .replace(".he are", "."+name+" are")\
+           .replace(".she are", "."+name+" are")\
+           .replace(".it are", "."+name+" are")\
+           .replace(" they are", "."+name+" are")\
            .replace("\n", ".")
     x = text.split(".")
     #print(text)
@@ -45,29 +53,53 @@ def mine( stri , name):
             if let == ")":
                 skip = False
 
-        sent = sent.replace("  "," ").replace(" >1>2>",">1>2>").replace("(","").replace(")","")
+        sent = sent.replace(" are ", " is +> ").replace(" is ", ">1>2>",1)\
+               .replace("  "," ").replace(" >1>2>",">1>2>").replace("(","").replace(")","").replace(" is +>", " are")
         #print(sent)
         if ">1>2>" in sent:
             out.append(sent)
-    name2 = out[0].split(">1>2>")[0]
+    name2 = name.split(" ")[0]
     out = [out.replace(name2,name) for out in out]
+    if len(name.split(" "))>1:
+        name2 = name.split(" ")[1]
+        out = [out.replace(name2,name) for out in out]
+    if len(name.split(" "))>2:
+        name2 = name.split(" ")[2]
+        out = [out.replace(name2,name) for out in out]
+    if len(name.split(" "))>3:
+        name2 = name.split(" ")[3]
+        out = [out.replace(name2,name) for out in out]
     out = [out.replace("he>1>2>",name+">1>2>") for out in out]
     out = [out.replace("she>1>2>",name+">1>2>") for out in out]
     out = [out.replace("it>1>2>",name+">1>2>") for out in out]
     out = [out.replace("they>1>2>",name+">1>2>") for out in out]
     out = [name+">1>2>"+out.split(">1>2>")[1] for out in out]
-    print(name)
-    print(name2)
-    print("")
-    print('\n'.join(map(str, out)))
-    
-        
+    out = [out.replace(" +> ",name+" ") for out in out]
+    #print(name)
+    #print(name2)
+    #print("")
+    #print('\n'.join(map(str, out)))
+    #print("")
+    a = ""
+    count = 1
+    while count<len(out[0].split(">1>2>")):
+        a += out[0].split(">1>2>")[count]
+        #print()
+        count += 1
+    b = ""
+    count = 1
+    while count<len(out[1].split(">1>2>")):
+        b += out[1].split(">1>2>")[count]
+        #print()
+        count += 1
+    #print(a + " and is also "+b)
+    return a + " and is also "+b
 data = ""
 try:
-    data = libs.wikipedia.summary("Linux",sentences=10)
+    data = libs.wikipedia.summary("Linus Torvalds",sentences=10)
 except libs.wikipedia.exceptions.DisambiguationError:
     data = ""
 except IndexError:
     data = ""
-print(mine(data,"Linux"))
+print("Linus Torvalds is "+mine(data))
 #print(data)
