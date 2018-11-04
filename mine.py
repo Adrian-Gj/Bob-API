@@ -20,6 +20,8 @@ def mine( stri):
            .replace(" were ", " was ")\
            .replace(" was also ", " was ")\
            .replace(" who is", "."+name+" is")\
+           .replace(" who was", "."+name+" was")\
+           .replace(" who were", "."+name+" were")\
            .replace(" he is", "."+name+" is")\
            .replace(" she is", "."+name+" is")\
            .replace(" it is", "."+name+" is")\
@@ -43,18 +45,22 @@ def mine( stri):
     for item in x:
         sent = ""
         skip = False
+        quote = False
         for let in item:
-            if let == "(":
+            if let == "(" and quote==False:
                 skip = True
-            if let == ";":
+            if let == ";" and quote==False:
                 skip = True
             if not skip:
                 sent += let
-            if let == ")":
+            if let == ")" and quote==False:
                 skip = False
-
-        sent = sent.replace(" are ", " is +> ").replace(" is ", ">1>2>",1)\
-               .replace("  "," ").replace(" >1>2>",">1>2>").replace("(","").replace(")","").replace(" is +>", " are")
+            if let == "\"":
+                skip = not skip
+            sent = sent.replace(" are ", " is +> ").replace(" was ", " is *> ").replace(" were ", " is /> ").replace(" is ", ">1>2>",1)\
+                   .replace("  "," ").replace(" >1>2>",">1>2>").replace("(","")\
+                   .replace(")","").replace(" is +>", " are").replace(" is *>", " was")\
+                   .replace(" is />", " were")
         #print(sent)
         if ">1>2>" in sent:
             out.append(sent)
@@ -74,7 +80,9 @@ def mine( stri):
     out = [out.replace("it>1>2>",name+">1>2>") for out in out]
     out = [out.replace("they>1>2>",name+">1>2>") for out in out]
     out = [name+">1>2>"+out.split(">1>2>")[1] for out in out]
-    out = [out.replace(" +> ",name+" ") for out in out]
+    out = [out.replace(" +> "," ") for out in out]
+    out = [out.replace(" *> "," ") for out in out]
+    out = [out.replace(" /> "," ") for out in out]
     #print(name)
     #print(name2)
     #print("")
@@ -93,13 +101,25 @@ def mine( stri):
         #print()
         count += 1
     #print(a + " and is also "+b)
-    return a + " and is also "+b
-data = ""
-try:
-    data = libs.wikipedia.summary("Linus Torvalds",sentences=10)
-except libs.wikipedia.exceptions.DisambiguationError:
-    data = ""
-except IndexError:
-    data = ""
-print("Linus Torvalds is "+mine(data))
+    x =    (a.replace(" +> "," ").replace("+> "," ")\
+           .replace(" *> "," ").replace("*> "," ")\
+           .replace(" /> "," ").replace("/> "," ")\
+           + " and is also " + \
+           b.replace(" +> "," ").replace("+> "," ")\
+           .replace(" *> "," ").replace("*> "," ")\
+           .replace(" /> "," ").replace("/> "," ")\
+            ).replace("  "," ")
+    while x.startswith(" "):
+        x = x[1:]
+    return x
+
+
+#data = ""
+#try:
+#    data = libs.wikipedia.summary("Linus Torvalds",sentences=10)
+#except libs.wikipedia.exceptions.DisambiguationError:
+#    data = ""
+#except IndexError:
+#    data = ""
+#print("Linus Torvalds is "+mine(data))
 #print(data)

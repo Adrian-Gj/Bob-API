@@ -21,6 +21,7 @@ from libs.lxml import html
 from process import *
 from multimedia import *
 from cl import *
+from mine import *
 
 myname = "bob"
 username = getpass.getuser()
@@ -578,9 +579,9 @@ while True:
             elif y in sims:            
                 say(info[sims[y]])
             else:
-                x = ask(nocap)
+                data = libs.wikipedia.summary(libs.wikipedia.search(nocap)[0], sentences=10)
                 if x != "":
-                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                    print(" "+mine(data))
                 else:
                     say("Sorry but, you don't know what "+y+" is.")
         elif q_type(text) == "def2":
@@ -590,11 +591,11 @@ while True:
             elif y in sims:            
                 say(info_was[sims[y]])
             else:
-                x = ask(nocap)
+                data = libs.wikipedia.summary(libs.wikipedia.search(nocap)[0], sentences=10)
                 if x != "":
-                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                    print(" "+mine(data))
                 else:
-                    say("Sorry but, you don't know what "+y+" was.")
+                    say("Sorry but, you don't know what "+y+" is.")
         elif q_type(text) == "time1":
             y = q_t1_proc(x)
             if y in time:
@@ -602,11 +603,11 @@ while True:
             elif y in sims:            
                 say(time[sims[y]])
             else:
-                x = ask(nocap)
+                data = libs.wikipedia.summary(libs.wikipedia.search(nocap)[0], sentences=10)
                 if x != "":
-                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                    print(" "+mine(data))
                 else:
-                    say("Sorry but, you don't know when "+y+" is.")
+                    say("Sorry but, you don't know what "+y+" is.")
         else:
             google_com(text,text)
             
@@ -619,11 +620,11 @@ while True:
             elif y in sims:            
                 say(info[sims[y]])
             else:
-                x = ask(nocap)
+                data = libs.wikipedia.summary(libs.wikipedia.search(nocap)[0], sentences=10)
                 if x != "":
-                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                    print(" "+mine(data))
                 else:
-                    say("Sorry but, you don't know who "+y+" is.")
+                    say("Sorry but, you don't know what "+y+" is.")
         if q_type(text) == "def2":
             y = q_t1_proc(x)
             if y in info_was:
@@ -631,11 +632,11 @@ while True:
             elif y in sims:            
                 say(info_was[sims[y]])
             else:
-                x = ask(nocap)
+                data = libs.wikipedia.summary(libs.wikipedia.search(nocap)[0], sentences=10)
                 if x != "":
-                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                    print(" "+mine(data))
                 else:
-                    say("Sorry but, you don't know who "+y+" was.")
+                    say("Sorry but, you don't know what "+y+" is.")
     elif text.startswith("where "):
         if text.endswith(" on"):
             text[:len(text)-3]
@@ -661,11 +662,11 @@ while True:
             elif y in sims:            
                 say(location_was[sims[y]])
             else:
-                x = ask(nocap)
+                data = libs.wikipedia.summary(libs.wikipedia.search(nocap)[0], sentences=10)
                 if x != "":
-                    print(" Wikipedia tells me that:\n\n"+str(x)+"\n")
+                    print(" "+mine(data))
                 else:
-                    say("Sorry but, you don't know where "+y+" was.")
+                    say("Sorry but, you don't know what "+y+" is.")
     elif text.startswith("when "):
         if text.endswith(" on"):
             text[:len(text)-3]
