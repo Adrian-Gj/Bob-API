@@ -311,6 +311,8 @@ def query(inp):
                         print("\n"+" All done!")
                     else:
                         print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
+                else:
+                    print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
     elif type == "def2":
         if key in info_was:
             output = info_was[key]
@@ -340,6 +342,8 @@ def query(inp):
                         print("\n"+" All done!")
                     else:
                         print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
+                else:
+                    print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
     elif type == "time1":
         if key in time:
             output = time[key]
@@ -369,6 +373,8 @@ def query(inp):
                         print("\n"+" All done!")
                     else:
                         print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
+                else:
+                    print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
     elif type == "time2":
         if key in time_was:
             output = time_was[key]
@@ -398,6 +404,8 @@ def query(inp):
                         print("\n"+" All done!")
                     else:
                         print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
+                else:
+                    print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
     elif type == "loc1":
         if key in location:
             output = location[key]
