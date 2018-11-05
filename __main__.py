@@ -22,6 +22,7 @@ from process import *
 from multimedia import *
 from cl import *
 from mine import *
+from algorithmy import *
 
 myname = "bob"
 username = getpass.getuser()
@@ -163,6 +164,7 @@ def say( str ):
         print(x.replace("$$@#¬¬¬"," "))
     return
 
+        
 print("Bob Shell version 1.0")
         
 info = {
@@ -273,6 +275,155 @@ if "@@2&*$£DASNNNOOOó" in info:
         print("\n\n\n\n\n\n\n the fox says meow...\n\n\n\n\n\n\n")
         info["@@2&*$£DASNNNOOOó"] = "Woof"
 lastloc = "london"
+
+########################################Queries####################################################################################################################
+def query(inp):
+    proc = q_split(inp)
+    type = q_type(inp)
+    key = q_t1_proc(proc)
+    output = ""
+    if type == "def1":
+        if key in info:
+            output = info[key]
+        elif proc in info:
+            output = info[proc]
+        elif search_dict(proc, info) != None:
+            x = search_dict(proc, info)
+            output = info[x]
+        else:
+            x = libs.wikipedia.search(nocap)
+            print(" Sorry I don't know anything about "+proc+" but I know a wikipedia page called '"+x[0]+"' which might have what you are asking me for.\n Do you want me to check?")
+            y = input("?> ")
+            if "yes" in y.lower():
+                print("\n"+libs.wikipedia.summary(x[0]))
+                y = input("\n I can remember that for next time if you like?\n?> ")
+                if "yes" in y.lower():
+                    remember(key + " is " + libs.wikipedia.summary(x[0]))
+                    print("\n"+" All done!")
+            else:
+                print(" How about '"+x[1]+"'?")
+                y = input("?> ")
+                if "yes" in y.lower():
+                    print("\n"+libs.wikipedia.summary(x[1]))
+                    y = input("\n I can remember that for next time if you like?\n?> ")
+                    if "yes" in y.lower():
+                        remember(key + " is " + libs.wikipedia.summary(x[0]))
+                        print("\n"+" All done!")
+                    else:
+                        print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
+    elif type == "def2":
+        if key in info_was:
+            output = info_was[key]
+        elif proc in info_was:
+            output = info_was[proc]
+        elif search_dict(proc, info_was) != None:
+            x = search_dict(proc, info_was)
+            output = info_was[x]
+        else:
+            x = libs.wikipedia.search(nocap)
+            print(" Sorry I don't know anything about "+proc+" but I know a wikipedia page called '"+x[0]+"' which might have what you are asking me for.\n Do you want me to check?")
+            y = input("?> ")
+            if "yes" in y.lower():
+                print("\n"+libs.wikipedia.summary(x[0]))
+                y = input("\n I can remember that for next time if you like?\n?> ")
+                if "yes" in y.lower():
+                    remember(key + " was " + libs.wikipedia.summary(x[0]))
+                    print("\n"+" All done!")
+            else:
+                print(" How about '"+x[1]+"'?")
+                y = input("?> ")
+                if "yes" in y.lower():
+                    print("\n"+libs.wikipedia.summary(x[1]))
+                    y = input("\n I can remember that for next time if you like?\n?> ")
+                    if "yes" in y.lower():
+                        remember(key + " was " + libs.wikipedia.summary(x[0]))
+                        print("\n"+" All done!")
+                    else:
+                        print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
+    elif type == "time1":
+        if key in time:
+            output = time[key]
+        elif proc in time:
+            output = time[proc]
+        elif search_dict(proc, time) != None:
+            x = search_dict(proc, time)
+            output = time[x]
+        else:
+            x = libs.wikipedia.search(nocap)
+            print(" Sorry I don't know anything about "+proc+" but I know a wikipedia page called '"+x[0]+"' which might have what you are asking me for.\n Do you want me to check?")
+            y = input("?> ")
+            if "yes" in y.lower():
+                print("\n"+libs.wikipedia.summary(x[0]))
+                y = input("\n I can remember that for next time if you like?\n?> ")
+                if "yes" in y.lower():
+                    remember(key + " is on " + libs.wikipedia.summary(x[0]))
+                    print("\n"+" All done!")
+            else:
+                print(" How about '"+x[1]+"'?")
+                y = input("?> ")
+                if "yes" in y.lower():
+                    print("\n"+libs.wikipedia.summary(x[1]))
+                    y = input("\n I can remember that for next time if you like?\n?> ")
+                    if "yes" in y.lower():
+                        remember(key + " is on " + libs.wikipedia.summary(x[0]))
+                        print("\n"+" All done!")
+                    else:
+                        print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
+    elif type == "time2":
+        if key in time_was:
+            output = time_was[key]
+        elif proc in time_was:
+            output = time_was[proc]
+        elif search_dict(proc, time_was) != None:
+            x = search_dict(proc, time_was)
+            output = time_was[x]
+        else:
+            x = libs.wikipedia.search(nocap)
+            print(" Sorry I don't know anything about "+proc+" but I know a wikipedia page called '"+x[0]+"' which might have what you are asking me for.\n Do you want me to check?")
+            y = input("?> ")
+            if "yes" in y.lower():
+                print("\n"+libs.wikipedia.summary(x[0]))
+                y = input("\n I can remember that for next time if you like?\n?> ")
+                if "yes" in y.lower():
+                    remember(key + " was on " + libs.wikipedia.summary(x[0]))
+                    print("\n"+" All done!")
+            else:
+                print(" How about '"+x[1]+"'?")
+                y = input("?> ")
+                if "yes" in y.lower():
+                    print("\n"+libs.wikipedia.summary(x[1]))
+                    y = input("\n I can remember that for next time if you like?\n?> ")
+                    if "yes" in y.lower():
+                        remember(key + " was on " + libs.wikipedia.summary(x[0]))
+                        print("\n"+" All done!")
+                    else:
+                        print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
+    elif type == "loc1":
+        if key in location:
+            output = location[key]
+        elif proc in location:
+            output = location[proc]
+        elif search_dict(proc, location) != None:
+            x = search_dict(proc, location)
+            output = location[x]
+        else:
+            print(" Do I look like Siri to you?")
+            print(" Ok I will do it...")
+            google_com(inp,inp)
+    elif type == "loc2":
+        if key in location_was:
+            output = location_was[key]
+        elif proc in location_was:
+            output = location_was[proc]
+        elif search_dict(proc, location) != None:
+            x = search_dict(proc, location)
+            output = location[x]
+        else:
+            print(" Do I look like Siri to you?")
+            print(" Ok I will do it...")
+            google_com(inp,inp)
+    say(output)
+    
 
 ########################################Main Loop###################################################################################################################
 while True:
@@ -571,114 +722,7 @@ while True:
         f.close()
         exit()
     elif text.startswith("what "):
-        x = q_split(text)
-        if q_type(text) == "def1":
-            y = q_t1_proc(x)
-            if y in info:
-                say(info[y])
-            elif y in sims:            
-                say(info[sims[y]])
-            else:
-                data = libs.wikipedia.page(libs.wikipedia.search(nocap)[0]).content
-                if x != "":
-                    mined = mine(data)
-                    print(mined)
-                    print("")
-                    question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
-                    if "yes" in question.lower():
-                        print("ok")
-                        remember(y + " is "+mined)
-                    else:
-                        print(" I had also found out about:")
-                        data2 = libs.wikipedia.search(nocap)
-                        a = 0
-                        for item in data2:
-                            print(" "+str(a)+": "+item)
-                            a+=1
-                        question2 = input(" Does one meet your requirements?\n If so which one?(must contain 'yes')\n?> ")
-                        if "yes" in question2.lower():
-                            print("Well that is good.")
-                            z = int(question2.replace(" ","").replace("yes",""))
-                            print(" Ok so this is what I found out about: "+data2[z])
-                            print(mine(libs.wikipedia.page(data2[z]).content))
-                            question = input("\n Do you want me to remember this as the answer to the previous question?\n?> ")
-                            if "yes" in question.lower():
-                                print("ok")
-                                remember(y + " is "+mine(libs.wikipedia.page(data2[z]).content))
-                else:
-                    say("Sorry but, you don't know what "+y+" is.")
-        elif q_type(text) == "def2":
-            y = q_t1_proc(x)
-            if y in info_was:
-                say(info_was[y])
-            elif y in sims:            
-                say(info_was[sims[y]])
-            else:
-                data = libs.wikipedia.page(libs.wikipedia.search(nocap)[0]).content
-                if x != "":
-                    mined = mine(data)
-                    print(mined)
-                    print("")
-                    question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
-                    if "yes" in question.lower():
-                        print("ok")
-                        remember(y + " was "+mined)
-                    else:
-                        print(" I had also found out about:")
-                        data2 = libs.wikipedia.search(nocap)
-                        a = 0
-                        for item in data2:
-                            print(" "+str(a)+": "+item)
-                            a+=1
-                        question2 = input(" Does one meet your requirements?\n If so which one?(must contain 'yes')\n?> ")
-                        if "yes" in question2.lower():
-                            print("Well that is good.")
-                            z = int(question2.replace(" ","").replace("yes",""))
-                            print(" Ok so this is what I found out about: "+data2[z])
-                            print(mine(libs.wikipedia.page(data2[z]).content))
-                            question = input("\n Do you want me to remember this as the answer to the previous question?\n?> ")
-                            if "yes" in question.lower():
-                                print("ok")
-                                remember(y + " was "+mine(libs.wikipedia.page(data2[z]).content))
-                else:
-                    say("Sorry but, you don't know what "+y+" is.")
-        elif q_type(text) == "time1":
-            y = q_t1_proc(x)
-            if y in time:
-                say(time[y])
-            elif y in sims:            
-                say(time[sims[y]])
-            else:
-                data = libs.wikipedia.page(libs.wikipedia.search(nocap)[0]).content
-                if x != "":
-                    mined = mine_time(data,x)
-                    print(mined)
-                    print("")
-                    question = input("\n I scrapped that from the wikipedia page titled: "+libs.wikipedia.search(nocap)[0]+"\n Do you want me to remember it?\n?> ")
-                    if "yes" in question.lower():
-                        print("ok")
-                        remember(y + " is on "+mined)
-                    else:
-                        print(" I had also found out about:")
-                        data2 = libs.wikipedia.search(nocap)
-                        a = 0
-                        for item in data2:
-                            print(" "+str(a)+": "+item)
-                            a+=1
-                        question2 = input(" Does one meet your requirements?\n If so which one?(must contain 'yes')\n?> ")
-                        if "yes" in question2.lower():
-                            print("Well that is good.")
-                            z = int(question2.replace(" ","").replace("yes",""))
-                            print(" Ok so this is what I found out about: "+data2[z])
-                            print(mine_time(libs.wikipedia.page(data2[z]).content),x)
-                            question = input("\n Do you want me to remember this as the answer to the previous question?\n?> ")
-                            if "yes" in question.lower():
-                                print("ok")
-                                remember(y + " is on "+mine_time(libs.wikipedia.page(data2[z]).content),x)
-                else:
-                    say("Sorry but, you don't know what "+y+" is.")
-        else:
-            google_com(text,text)
+        query(text)
             
     elif text.startswith("who "):
         x = q_split(text)

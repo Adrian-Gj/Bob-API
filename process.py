@@ -141,6 +141,8 @@ def q_type(text):
         return "loc1"
     elif text.startswith("where was "):
         return "loc2"
+    elif text.startswith("where were "):
+        return "loc2"
     elif text.startswith("how is "):
         return "def1"
     elif text.startswith("how are "):
@@ -199,6 +201,8 @@ def q_split(text):
         x = text[9:]
     elif text.startswith("where was "):
         x = text[10:]
+    elif text.startswith("where were "):
+        x = text[11:]
     elif text.startswith("how is "):
         x = text[7:]
     elif text.startswith("how are "):
