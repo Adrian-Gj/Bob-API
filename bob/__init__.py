@@ -28,12 +28,14 @@ myname = "bob"
 username = getpass.getuser()
 
 it = ""
-global FINAL_OUTPUT
-FINAL_OUTPUT = ""
+
+global OUTPUT_CMD
+OUTPUT_CMD = 'print(stuff)'
 
 def printbob(stuff):
-    global FINAL_OUTPUT
-    FINAL_OUTPUT += stuff + "\n"
+    global OUTPUT_CMD
+    exec( OUTPUT_CMD )
+    
     
 def remember(text):
     global it
@@ -299,9 +301,10 @@ def query(inp):
             x = search_dict(proc, info)
             output = info[x]
         else:
-            x = wikipedia.search(nocap)
+            x = wikipedia.search(inp)
             printbob("Sorry I don't know anything about "+proc+" but I know a wikipedia page called '"+x[0]+"' which might have what you are asking me for.\nDo you want me to check?")
             y = input("?> ")
+
             if "yes" in y.lower():
                 printbob("\n"+wikipedia.summary(x[0]))
                 y = input("\nI can remember that for next time if you like?\n?> ")
@@ -330,9 +333,10 @@ def query(inp):
             x = search_dict(proc, info_was)
             output = info_was[x]
         else:
-            x = wikipedia.search(nocap)
+            x = wikipedia.search(inp)
             printbob("Sorry I don't know anything about "+proc+" but I know a wikipedia page called '"+x[0]+"' which might have what you are asking me for.\nDo you want me to check?")
             y = input("?> ")
+
             if "yes" in y.lower():
                 printbob("\n"+wikipedia.summary(x[0]))
                 y = input("\nI can remember that for next time if you like?\n?> ")
@@ -361,9 +365,10 @@ def query(inp):
             x = search_dict(proc, time)
             output = time[x]
         else:
-            x = wikipedia.search(nocap)
+            x = wikipedia.search(inp)
             printbob("Sorry I don't know anything about "+proc+" but I know a wikipedia page called '"+x[0]+"' which might have what you are asking me for.\nDo you want me to check?")
             y = input("?> ")
+
             if "yes" in y.lower():
                 printbob("\n"+wikipedia.summary(x[0]))
                 y = input("\nI can remember that for next time if you like?\n?> ")
@@ -392,9 +397,10 @@ def query(inp):
             x = search_dict(proc, time_was)
             output = time_was[x]
         else:
-            x = wikipedia.search(nocap)
+            x = wikipedia.search(inp)
             printbob("Sorry I don't know anything about "+proc+" but I know a wikipedia page called '"+x[0]+"' which might have what you are asking me for.\nDo you want me to check?")
             y = input("?> ")
+
             if "yes" in y.lower():
                 printbob("\n"+wikipedia.summary(x[0]))
                 y = input("\nI can remember that for next time if you like?\n?> ")
@@ -444,10 +450,6 @@ def query(inp):
 ########################################Main Loop###################################################################################################################
 def BOB(IN):
     
-    global FINAL_OUTPUT
-
-    FINAL_OUTPUT = ""
-    
     info["up"]="the sky"
     
     try:
@@ -473,6 +475,7 @@ def BOB(IN):
         dynamics2[key] = eval(value)
     info.update(dynamics2)   
     #sims.update(dynamics_sims)
+    text = ""
     try:
         text = IN#input(os.getcwd()+"> ")
     except KeyboardInterrupt:
@@ -1165,9 +1168,6 @@ def BOB(IN):
     g.write( str(time) )
     g.close()
 
-#######################################################################################################################################################
-#################################################################OUTPUT################################################################################
-    return FINAL_OUTPUT
 
 
     
