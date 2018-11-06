@@ -29,6 +29,11 @@ username = getpass.getuser()
 
 it = ""
 
+FINAL_OUTPUT = ""
+
+def printbob(stuff):
+    FINAL_OUTPUT += stuff
+    
 def remember(text):
     global it
     thing = "x"
@@ -98,14 +103,14 @@ def remember(text):
         output = info[x]+" "+output
 
     if rtype == "loc1":
-        #print("1")
+        #printbob("1")
         if istime(output) == True:
-            #print("3")
+            #printbob("3")
             rtype = "time1"
     if rtype == "loc2":
-        #print("2")
+        #printbob("2")
         if istime(output) == True:
-            #print("4")
+            #printbob("4")
             rtype = "time2"
             
     if rtype == "def1":
@@ -167,15 +172,15 @@ def say( str ):
     if "%SEARCH%" in str:
         google(str.replace("%SEARCH%",""))
     else:
-        print(x.replace("$$@#¬¬¬"," "))
+        print(x.replace("$$@#¬¬¬"," ")[1:-1])
     return
 
         
-print("Bob Shell version 1.0")
+print("---->Made using the amazing Bob-api that was created by Adrian Gjonca\n---->Bob-api is licensed using the: GNU General Public License v3.0")
         
 info = {
         "you": "I'm Bob! I'm great Thanks!",
-        "your name": "I'm Bob and i must be Adrian.",
+        "your name": "I'm Bob and i must be "+username+".",
         }
 info_was = {
         }
@@ -272,14 +277,10 @@ except FileNotFoundError:
 #    print("[BOB] No Dynamics-Sims file availiable. Using defaults")
     
 print()
-say("Hello I'm Bob!")
+#say("Hello I'm Bob!")
 
 os.chdir(str(Path.home()))
 
-if "@@2&*$£DASNNNOOOó" in info:
-    if info["@@2&*$£DASNNNOOOó"] == "Meow":
-        print("\n\n\n\n\n\n\n the fox says meow...\n\n\n\n\n\n\n")
-        info["@@2&*$£DASNNNOOOó"] = "Woof"
 lastloc = "london"
 
 ########################################Queries####################################################################################################################
@@ -298,27 +299,27 @@ def query(inp):
             output = info[x]
         else:
             x = libs.wikipedia.search(nocap)
-            print(" Sorry I don't know anything about "+proc+" but I know a wikipedia page called '"+x[0]+"' which might have what you are asking me for.\n Do you want me to check?")
+            printbob("Sorry I don't know anything about "+proc+" but I know a wikipedia page called '"+x[0]+"' which might have what you are asking me for.\nDo you want me to check?")
             y = input("?> ")
             if "yes" in y.lower():
-                print("\n"+libs.wikipedia.summary(x[0]))
-                y = input("\n I can remember that for next time if you like?\n?> ")
+                printbob("\n"+libs.wikipedia.summary(x[0]))
+                y = input("\nI can remember that for next time if you like?\n?> ")
                 if "yes" in y.lower():
                     remember(key + " is " + libs.wikipedia.summary(x[0]))
-                    print("\n"+" All done!")
+                    printbob("\n"+"All done!")
             else:
-                print(" How about '"+x[1]+"'?")
+                printbob("How about '"+x[1]+"'?")
                 y = input("?> ")
                 if "yes" in y.lower():
-                    print("\n"+libs.wikipedia.summary(x[1]))
-                    y = input("\n I can remember that for next time if you like?\n?> ")
+                    printbob("\n"+libs.wikipedia.summary(x[1]))
+                    y = input("\nI can remember that for next time if you like?\n?> ")
                     if "yes" in y.lower():
                         remember(key + " is " + libs.wikipedia.summary(x[0]))
-                        print("\n"+" All done!")
+                        printbob("\n"+"All done!")
                     else:
-                        print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
+                        printbob("*sigh*\nI give up. Go look it up on google or sonthing then tell me about it when you get back...")
                 else:
-                    print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
+                    printbob("*sigh*\nI give up. Go look it up on google or sonthing then tell me about it when you get back...")
     elif type == "def2":
         if key in info_was:
             output = info_was[key]
@@ -329,27 +330,27 @@ def query(inp):
             output = info_was[x]
         else:
             x = libs.wikipedia.search(nocap)
-            print(" Sorry I don't know anything about "+proc+" but I know a wikipedia page called '"+x[0]+"' which might have what you are asking me for.\n Do you want me to check?")
+            printbob("Sorry I don't know anything about "+proc+" but I know a wikipedia page called '"+x[0]+"' which might have what you are asking me for.\nDo you want me to check?")
             y = input("?> ")
             if "yes" in y.lower():
-                print("\n"+libs.wikipedia.summary(x[0]))
-                y = input("\n I can remember that for next time if you like?\n?> ")
+                printbob("\n"+libs.wikipedia.summary(x[0]))
+                y = input("\nI can remember that for next time if you like?\n?> ")
                 if "yes" in y.lower():
                     remember(key + " was " + libs.wikipedia.summary(x[0]))
-                    print("\n"+" All done!")
+                    printbob("\n"+"All done!")
             else:
-                print(" How about '"+x[1]+"'?")
+                printbob("How about '"+x[1]+"'?")
                 y = input("?> ")
                 if "yes" in y.lower():
-                    print("\n"+libs.wikipedia.summary(x[1]))
-                    y = input("\n I can remember that for next time if you like?\n?> ")
+                    printbob("\n"+libs.wikipedia.summary(x[1]))
+                    y = input("\nI can remember that for next time if you like?\n?> ")
                     if "yes" in y.lower():
                         remember(key + " was " + libs.wikipedia.summary(x[0]))
-                        print("\n"+" All done!")
+                        printbob("\n"+"All done!")
                     else:
-                        print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
+                        printbob("*sigh*\nI give up. Go look it up on google or sonthing then tell me about it when you get back...")
                 else:
-                    print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
+                    printbob("*sigh*\nI give up. Go look it up on google or sonthing then tell me about it when you get back...")
     elif type == "time1":
         if key in time:
             output = time[key]
@@ -360,27 +361,27 @@ def query(inp):
             output = time[x]
         else:
             x = libs.wikipedia.search(nocap)
-            print(" Sorry I don't know anything about "+proc+" but I know a wikipedia page called '"+x[0]+"' which might have what you are asking me for.\n Do you want me to check?")
+            printbob("Sorry I don't know anything about "+proc+" but I know a wikipedia page called '"+x[0]+"' which might have what you are asking me for.\nDo you want me to check?")
             y = input("?> ")
             if "yes" in y.lower():
-                print("\n"+libs.wikipedia.summary(x[0]))
-                y = input("\n I can remember that for next time if you like?\n?> ")
+                printbob("\n"+libs.wikipedia.summary(x[0]))
+                y = input("\nI can remember that for next time if you like?\n?> ")
                 if "yes" in y.lower():
                     remember(key + " is on " + libs.wikipedia.summary(x[0]))
-                    print("\n"+" All done!")
+                    printbob("\n"+"All done!")
             else:
-                print(" How about '"+x[1]+"'?")
+                printbob("How about '"+x[1]+"'?")
                 y = input("?> ")
                 if "yes" in y.lower():
-                    print("\n"+libs.wikipedia.summary(x[1]))
-                    y = input("\n I can remember that for next time if you like?\n?> ")
+                    printbob("\n"+libs.wikipedia.summary(x[1]))
+                    y = input("\nI can remember that for next time if you like?\n?> ")
                     if "yes" in y.lower():
                         remember(key + " is on " + libs.wikipedia.summary(x[0]))
-                        print("\n"+" All done!")
+                        printbob("\n"+"All done!")
                     else:
-                        print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
+                        printbob("*sigh*\nI give up. Go look it up on google or sonthing then tell me about it when you get back...")
                 else:
-                    print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
+                    printbob("*sigh*\nI give up. Go look it up on google or sonthing then tell me about it when you get back...")
     elif type == "time2":
         if key in time_was:
             output = time_was[key]
@@ -391,27 +392,27 @@ def query(inp):
             output = time_was[x]
         else:
             x = libs.wikipedia.search(nocap)
-            print(" Sorry I don't know anything about "+proc+" but I know a wikipedia page called '"+x[0]+"' which might have what you are asking me for.\n Do you want me to check?")
+            printbob("Sorry I don't know anything about "+proc+" but I know a wikipedia page called '"+x[0]+"' which might have what you are asking me for.\nDo you want me to check?")
             y = input("?> ")
             if "yes" in y.lower():
-                print("\n"+libs.wikipedia.summary(x[0]))
-                y = input("\n I can remember that for next time if you like?\n?> ")
+                printbob("\n"+libs.wikipedia.summary(x[0]))
+                y = input("\nI can remember that for next time if you like?\n?> ")
                 if "yes" in y.lower():
                     remember(key + " was on " + libs.wikipedia.summary(x[0]))
-                    print("\n"+" All done!")
+                    printbob("\n"+"All done!")
             else:
-                print(" How about '"+x[1]+"'?")
+                printbob("How about '"+x[1]+"'?")
                 y = input("?> ")
                 if "yes" in y.lower():
-                    print("\n"+libs.wikipedia.summary(x[1]))
-                    y = input("\n I can remember that for next time if you like?\n?> ")
+                    printbob("\n"+libs.wikipedia.summary(x[1]))
+                    y = input("\nI can remember that for next time if you like?\n?> ")
                     if "yes" in y.lower():
                         remember(key + " was on " + libs.wikipedia.summary(x[0]))
-                        print("\n"+" All done!")
+                        printbob("\n"+"All done!")
                     else:
-                        print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
+                        printbob("*sigh*\nI give up. Go look it up on google or sonthing then tell me about it when you get back...")
                 else:
-                    print(" *sigh*\n I give up. Go look it up on google or sonthing then tell me about it when you get back...")
+                    printbob("*sigh*\nI give up. Go look it up on google or sonthing then tell me about it when you get back...")
     elif type == "loc1":
         if key in location:
             output = location[key]
@@ -421,8 +422,8 @@ def query(inp):
             x = search_dict(proc, location)
             output = location[x]
         else:
-            print(" Do I look like Siri to you?")
-            print(" Ok I will do it...")
+            printbob("Do I look like Siri to you?")
+            printbob("Ok I will do it...")
             google_com(inp,inp)
     elif type == "loc2":
         if key in location_was:
@@ -433,14 +434,17 @@ def query(inp):
             x = search_dict(proc, location)
             output = location[x]
         else:
-            print(" Do I look like Siri to you?")
-            print(" Ok I will do it...")
+            printbob("Do I look like Siri to you?")
+            printbob("Ok I will do it...")
             google_com(inp,inp)
     say(output)
     
 
 ########################################Main Loop###################################################################################################################
-while True:
+def BOB(IN):
+    
+    global FINAL_OUTPUT
+    
     info["up"]="the sky"
     
     try:
@@ -467,7 +471,7 @@ while True:
     info.update(dynamics2)   
     #sims.update(dynamics_sims)
     try:
-        text = input(os.getcwd()+"> ")
+        text = IN#input(os.getcwd()+"> ")
     except KeyboardInterrupt:
         text = " "
     except EOFError:
@@ -570,7 +574,7 @@ while True:
 
     #Reply to stuff
     if Greeting:
-        print(" Hi "+username+"!")
+        printbob("Hi "+username+"!")
         
     #Remove and
     if text.startswith("and "):
@@ -719,23 +723,6 @@ while True:
         location["i"] = lastloc
 
 #####Question
-    elif text.startswith("what does the fox say"):
-        sleep(4)
-        print(" fó× you!")
-        sleep(2)
-        print(" Absolute fó×íΠ֍ fó×é®!")
-        sleep(2)
-        print(" I FÓ×ÍΠ֍ HATE YOU!")
-        sleep(2)
-        info["@@2&*$£DASNNNOOOó"] = "Meow"
-        starttime=timé()
-        while timé()-starttime < 5:
-            print("ééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé")
-        f = open(str(Path.home())+"/"+".info.bob","w")
-        f.write( str(info) )
-        f.close()
-        exit()
-        
     elif text.startswith("what ") or text.startswith("who ") or text.startswith("where ") or text.startswith("when ") or text.startswith("how "):
         query(text)
             
@@ -781,7 +768,7 @@ while True:
             elif site_exists("http://"+(nocap.replace("http://","").replace("https://","")) + ".com"):
                 open_file("http://"+(nocap.replace("http://","").replace("https://","")) + ".com")
             else:
-                print(" Can't find the specified file/program.")
+                printbob("Can't find the specified file/program.")
     elif text.startswith("run "):
         os.system(nocap[4:])
     elif text.startswith("execute "):
@@ -817,11 +804,11 @@ while True:
 #####Creation
     elif text.startswith("create "):
         if text[7:].startswith("templates"):
-            print("[BOB] [INFO] Creating templates is required to install adons.")
-            print("[BOB] [CAUTION] Do not do this if you have previously installed any addons you wish to keep.")
+            printbob("[BOB] [INFO] Creating templates is required to install adons.")
+            printbob("[BOB] [CAUTION] Do not do this if you have previously installed any addons you wish to keep.")
             x = input("[BOB] [???] Do you wish to proceed? ('Yes' to autheticate) \n>>> ")
             if x == "Yes":
-                print("[BOB] Creating templates...")
+                printbob("[BOB] Creating templates...")
                 f = open(str(Path.home())+"/"+".commands.bob","w")
                 f.write(str(commands))
                 f.close()
@@ -831,7 +818,7 @@ while True:
                 #f = open(str(Path.home())+"/"+".dynamics_sims.bob","w")
                 #f.write("{\n\n}")
                 #f.close()
-                print("\n I have completed the creation of your templates.\n You may now install addons.")
+                printbob("\nI have completed the creation of your templates.\nYou may now install addons.")
 
 ####Command line
     elif text.startswith("move "):
@@ -880,7 +867,7 @@ while True:
         try:
             shutil.move(a, b)
         except FileNotFoundError:
-            print(" I can't find one of the files.")
+            printbob("I can't find one of the files.")
 
     elif text.startswith("read "):
         text = text[5:]
@@ -916,7 +903,7 @@ while True:
             data = open(nocap, 'r').read()
             print(data)
         except FileNotFoundError:
-            print(" I don't know where \""+nocap+"\" is")
+            printbob("I don't know where \""+nocap+"\" is")
             
     elif text.startswith("create "):
         text = text[7:]
@@ -1038,32 +1025,28 @@ while True:
         try:
             os.chdir(nocap[20:].replace("~",str(Path.home())))
         except FileNotFoundError:
-            print(" "+"Sorry but I don't undersand where "+nocap[20:]+" is. Maybe you misspelt something.")
+            printbob(""+"Sorry but I don't undersand where "+nocap[20:]+" is. Maybe you misspelt something.")
     elif text.startswith("change directory "):
         try:
             os.chdir(nocap[17:].replace("~",str(Path.home())))
         except FileNotFoundError:
-            print(" "+"Sorry but I don't undersand where "+nocap[17:]+" is. Maybe you misspelt something.")
+            printbob(""+"Sorry but I don't undersand where "+nocap[17:]+" is. Maybe you misspelt something.")
     elif text.startswith("cd to "):
         try:
             os.chdir(nocap[6:].replace("~",str(Path.home())))
         except FileNotFoundError:
-            print(" "+"Sorry but I don't undersand where "+nocap[6:]+" is. Maybe you misspelt something.")
+            printbob(""+"Sorry but I don't undersand where "+nocap[6:]+" is. Maybe you misspelt something.")
     elif text.startswith("cd "):
         try:
             os.chdir(nocap[3:].replace("~",str(Path.home())))
         except FileNotFoundError:
-            print(" "+"Sorry but I don't undersand where "+nocap[3:]+" is. Maybe you misspelt something.")
+            printbob(""+"Sorry but I don't undersand where "+nocap[3:]+" is. Maybe you misspelt something.")
 
 #####Jokes
     elif text.startswith("a joke"):
-        print(" You are a joke...")
-    elif text.startswith("speak a foreign language"):
-        print(" Ti je nje idiot.")
-    elif text.startswith("speak another language"):
-        print(" Me duket si ti vetem shkrove 'another language' per factin te ti sdi si te shcruash 'foreign'.")
+        printbob("You are a joke...")
     elif text.startswith("roll a dice"):
-        print(" Here you go: "+str(random.randint(1, 6)))
+        printbob("Here you go: "+str(random.randint(1, 6)))
 
 #####Exiting
     elif text.startswith("exit"):
@@ -1108,7 +1091,7 @@ while True:
             data3 = open(str(Path.home())+"/"+".commands.bob", 'r').read()
             commands = eval(data3)
         except FileNotFoundError:
-            print("[BOB] No Commands file availiable. Creating new one")
+            printbob("[BOB] No Commands file availiable. Creating new one")
 
         x = text.find('call')
         y = 4
@@ -1178,6 +1161,11 @@ while True:
     g = open(str(Path.home())+"/"+".time_was.bob","w")
     g.write( str(time) )
     g.close()
+
+#######################################################################################################################################################
+#################################################################OUTPUT################################################################################
+    return FINAL_OUTPUT
+
 
     
 
