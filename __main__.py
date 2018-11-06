@@ -110,16 +110,22 @@ def remember(text):
             
     if rtype == "def1":
         info[x] = output
+        info[x] = q_t1_proc(output)
     if rtype == "def2":
         info_was[x] = output
+        info_was[x] = q_t1_proc(output)
     if rtype == "loc1":
         location[x] = output
+        location[x] = q_t1_proc(output)
     if rtype == "loc2":
         location_was[x] = output
+        location_was[x] = q_t1_proc(output)
     if rtype == "time1":
         time[x] = output
+        time[x] = q_t1_proc(output)
     if rtype == "time2":
         time_was[x] = output
+        time_was[x] = q_t1_proc(output)
 
     if input != "it":
         it = input
@@ -808,6 +814,24 @@ while True:
             if text.startswith(' "'):
                 break
         open_file(nocap)
+#####Creation
+    elif text.startswith("create "):
+        if text[7:].startswith("templates"):
+            print("[BOB] [INFO] Creating templates is required to install adons.")
+            print("[BOB] [CAUTION] Do not do this if you have previously installed any addons you wish to keep.")
+            x = input("[BOB] [???] Do you wish to proceed? ('Yes' to autheticate) \n>>> ")
+            if x == "Yes":
+                print("[BOB] Creating templates...")
+                f = open(str(Path.home())+"/"+".commands.bob","w")
+                f.write(str(commands))
+                f.close()
+                f = open(str(Path.home())+"/"+".dynamics.bob","w")
+                f.write(str(dynamics))
+                f.close()
+                #f = open(str(Path.home())+"/"+".dynamics_sims.bob","w")
+                #f.write("{\n\n}")
+                #f.close()
+                print("\n I have completed the creation of your templates.\n You may now install addons.")
 
 ####Command line
     elif text.startswith("move "):
@@ -1107,24 +1131,6 @@ while True:
         f.write( str(commands) )
         f.close()
 
-#####Creation
-    elif text.startswith("create templates "):
-        if text[7:].startswith("templates"):
-            print("[BOB] [INFO] Creating templates is required to install adons.")
-            print("[BOB] [CAUTION] Do not do this if you have previously installed any addons you wish to keep.")
-            x = input("[BOB] [???] Do you wish to proceed? ('Yes' to autheticate) \n>>> ")
-            if x == "Yes":
-                print("[BOB] Creating templates...")
-                f = open(str(Path.home())+"/"+".commands.bob","w")
-                f.write(str(commands))
-                f.close()
-                f = open(str(Path.home())+"/"+".dynamics.bob","w")
-                f.write(str(dynamics))
-                f.close()
-                #f = open(str(Path.home())+"/"+".dynamics_sims.bob","w")
-                #f.write("{\n\n}")
-                #f.close()
-                print("\n I have completed the creation of your templates.\n You may now install addons.")
 
 #####Statement
     elif text.startswith("remember that "):

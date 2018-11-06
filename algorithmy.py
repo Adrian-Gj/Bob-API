@@ -7,10 +7,17 @@ def search_dict(key,dict):
 
     segments = q_t1_proc(key).split(" ")
     keys = list(dict.keys())
-
+    segments = [x for x in segments if x != "my"]
+    segments = [x for x in segments if x != "of"]
     possible += segments
+    #print(str(possible))
     for k in keys:
         for p in possible:
-            if p in k:
+            if p==k:
                 return k
+            if p+" " in k:
+                return k
+            if " "+p in k:
+                return k
+
 
