@@ -1134,7 +1134,7 @@ def BOB(IN):
         
 #####Else
     else:
-        say(" Sorry //2*1 dont understant how to "+ text + ".")
+        say("Sorry //2*1 dont understant how to "+ text + ".")
 
 #####Saving################################################################################
     f = open(str(Path.home())+"/"+".info.bob","w")
