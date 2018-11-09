@@ -634,18 +634,20 @@ def BOB(IN):
     if text.startswith("what ") or text.startswith("who ") or text.startswith("where ") or text.startswith("when ") or text.startswith("how "):
         query(text)
                  
-    elif text[0:findnth(text," ",6)] in COMMANDS:
-        exec(COMMANDS[text[0:findnth(text," ",6)]] + "(text,nocap," + '"' + text[0:findnth(text," ",6)] + '")')
-    elif text[0:findnth(text," ",5)] in COMMANDS:
-        exec(COMMANDS[text[0:findnth(text," ",5)]] + "(text,nocap," + '"' + text[0:findnth(text," ",5)] + '")')
-    elif text[0:findnth(text," ",4)] in COMMANDS:
-        exec(COMMANDS[text[0:findnth(text," ",4)]] + "(text,nocap," + '"' + text[0:findnth(text," ",4)] + '")')
-    elif text[0:findnth(text," ",3)] in COMMANDS:
-        exec(COMMANDS[text[0:findnth(text," ",3)]] + "(text,nocap," + '"' + text[0:findnth(text," ",3)] + '")')
-    elif text[0:findnth(text," ",2)] in COMMANDS:
-        exec(COMMANDS[text[0:findnth(text," ",2)]] + "(text,nocap," + '"' + text[0:findnth(text," ",2)] + '")')
-    elif text[0:findnth(text," ",1)] in COMMANDS:
-        exec(COMMANDS[text[0:findnth(text," ",1)]] + "(text,nocap," + '"' + text[0:findnth(text," ",1)] + '")')
+    elif text[0:findnth(text," ",6)]+" " in COMMANDS:
+        exec(COMMANDS[text[0:findnth(text," ",6)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",6)] + ' ")')
+    elif text[0:findnth(text," ",5)]+" " in COMMANDS:
+        exec(COMMANDS[text[0:findnth(text," ",5)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",5)] + ' ")')
+    elif text[0:findnth(text," ",4)]+" " in COMMANDS:
+        exec(COMMANDS[text[0:findnth(text," ",4)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",4)] + ' ")')
+    elif text[0:findnth(text," ",3)]+" " in COMMANDS:
+        exec(COMMANDS[text[0:findnth(text," ",3)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",3)] + ' ")')
+    elif text[0:findnth(text," ",2)]+" " in COMMANDS:
+        exec(COMMANDS[text[0:findnth(text," ",2)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",2)] + ' ")')
+    elif text[0:findnth(text," ",1)]+" " in COMMANDS:
+        exec(COMMANDS[text[0:findnth(text," ",1)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",1)] + ' ")')
+    elif text[0:findnth(text," ",0)]+" " in COMMANDS:
+        exec(COMMANDS[text[0:findnth(text," ",0)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",0)] + ' ")')
         
     elif text.startswith("a joke"):
         printbob("You are a joke...")
@@ -734,6 +736,7 @@ def BOB(IN):
     #Else
     else:
         say("Sorry //2*1 dont understant how to "+ text + ".")
+        print("'"+text[0:findnth(text," ",1)]+" "+"'")
 
 ##Saving
     f = open(str(Path.home())+"/"+".info.bob","w")
