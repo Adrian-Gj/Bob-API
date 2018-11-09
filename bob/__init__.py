@@ -23,6 +23,7 @@ from .multimedia import *
 from .cl import *
 from .mine import *
 from .algorithmy import *
+from .commands import *
 
 myname = "bob"
 username = getpass.getuser()
@@ -494,14 +495,11 @@ def BOB(IN):
     global STARTERS
     global ENDINGS
     STARTERS.append(myname+" ")
-    STARTERS.append("hi "myname+" ")
     ENDINGS.append(" "+myname)
     while text.startswith(tuple(STARTERS)):
         for item in STARTERS:
             if text.startswith(item):
                 text = text[len(item):]
-                if item == "hi "myname+" ":
-                    printbob("Hi "+username+"!")
     while text.endswith(tuple(ENDINGS)):
         for item in ENDINGS:
             if text.endswith(item):
@@ -611,319 +609,50 @@ def BOB(IN):
         query(text)
                  
     elif text.startswith("open "):
-        text = text[5:]
-        nocap = nocap[5:]
-        while text.startswith("the ") or text.startswith("file ") or text.startswith("document ") or text.startswith("called ") or text.startswith("app ") or text.startswith("site ") or text.startswith("website ") or text.startswith("program "):
-            if text.startswith("the "):
-                text = text[4:]
-                nocap = nocap[4:]
-            if text.startswith("file "):
-                text = text[5:]
-                nocap = nocap[5:]
-            if text.startswith("document "):
-                text = text[9:]
-                nocap = nocap[9:]
-            if text.startswith("called "):
-                text = text[7:]
-                nocap = nocap[7:]
-            if text.startswith("app "):
-                text = text[4:]
-                nocap = nocap[4:]
-            if text.startswith("site "):
-                text = text[5:]
-                nocap = nocap[5:]
-            if text.startswith("website "):
-                text = text[8:]
-                nocap = nocap[8:]
-            if text.startswith("program "):
-                text = text[8:]
-                nocap = nocap[8:]
-            if text.startswith(' "'):
-                break
-        try:
-            if shutil.which(nocap.replace('"',"")):
-                os.system(nocap)
-            else:
-                open_file(nocap)
-        except FileNotFoundError:
-            if site_exists("http://"+(nocap.replace("http://","").replace("https://",""))):
-                open_file("http://"+(nocap.replace("http://","").replace("https://","")))
-            elif site_exists("http://"+(nocap.replace("http://","").replace("https://","")) + ".com"):
-                open_file("http://"+(nocap.replace("http://","").replace("https://","")) + ".com")
-            else:
-                printbob("Can't find the specified file/program.")
+        command_open(text,nocap,"open ")
     elif text.startswith("run "):
-        os.system(nocap[4:])
+        command_run(text,nocap,"run ")
     elif text.startswith("execute "):
-        os.system(nocap[8:])
+        command_run(text,nocap,"execute ")
     elif text.startswith("exec "):
-        os.system(nocap[5:])
+        command_run(text,nocap,"exec ")
     elif text.startswith("call "):
-        os.system(nocap[5:])
+        command_run(text,nocap,"call ")
     elif text.startswith("launch app "):
-        os.system(nocap[11:])
+        command_run(text,nocap,"launch app ")
     elif text.startswith("launch "):
-        os.system(nocap[7:])
-
+        command_run(text,nocap,"launch ")
     elif text.startswith("edit "):
-        text = text[5:]
-        nocap = nocap[5:]
-        while text.startswith("the ") or text.startswith("file ") or text.startswith("document ") or text.startswith("called "):
-            if text.startswith("the "):
-                text = text[4:]
-                nocap = nocap[4:]
-            if text.startswith("file "):
-                text = text[5:]
-                nocap = nocap[5:]
-            if text.startswith("document "):
-                text = text[9:]
-                nocap = nocap[9:]
-            if text.startswith("called "):
-                text = text[7:]
-                nocap = nocap[7:]
-            if text.startswith(' "'):
-                break
-        open_file(nocap)
-#####Creation
-    elif text.startswith("create "):
-        if text[7:].startswith("templates"):
-            printbob("[BOB] [INFO] Creating templates is required to install adons.")
-            printbob("[BOB] [CAUTION] Do not do this if you have previously installed any addons you wish to keep.")
-            x = input("[BOB] [???] Do you wish to proceed? ('Yes' to autheticate) \n>>> ")
-            if x == "Yes":
-                printbob("[BOB] Creating templates...")
-                f = open(str(Path.home())+"/"+".commands.bob","w")
-                f.write(str(commands))
-                f.close()
-                f = open(str(Path.home())+"/"+".dynamics.bob","w")
-                f.write(str(dynamics))
-                f.close()
-                #f = open(str(Path.home())+"/"+".dynamics_sims.bob","w")
-                #f.write("{\n\n}")
-                #f.close()
-                printbob("\nI have completed the creation of your templates.\nYou may now install addons.")
+        command_edit(text,nocap,"edit ")
 
-####Command line
+    elif text.startswith("create templates "):
+        command_create(text,nocap,"create templates ")
+
     elif text.startswith("move "):
-        text = text[5:]
-        nocap = nocap[5:]
-        a = nocap[0:text.find("to")-1]
-        b = nocap[text.find("to")+3:]
-        print(a)
-        print(b)
-        while a.startswith("file ") or a.startswith("\"") or a.startswith("the ") or a.startswith("called ") or a.startswith("my ")\
-              or a.startswith("named ") or a.startswith("directory ") or a.startswith("folder "):
-            if a.startswith("\""):
-                break;
-            if a.startswith("file "):
-                a = a[5:]
-            if a.startswith("the "):
-                a = a[4:]
-            if a.startswith("called "):
-                a = a[7:]
-            if a.startswith("named "):
-                a = a[6:]
-            if a.startswith("my "):
-                a = a[3:]
-            if a.startswith("directory "):
-                a = a[10:]
-            if a.startswith("folder "):
-                a = a[7:]
-        while b.startswith("file ") or b.startswith("\"") or b.startswith("the ") or b.startswith("called ") or b.startswith("my ")\
-              or b.startswith("named ") or b.startswith("directory ") or b.startswith("folder "):
-            if b.startswith("\""):
-                break;
-            if b.startswith("file "):
-                b = b[5:]
-            if b.startswith("the "):
-                b = b[4:]
-            if a.startswith("called "):
-                b = b[7:]
-            if a.startswith("named "):
-                b = b[6:]
-            if a.startswith("my "):
-                b = b[3:]
-            if a.startswith("directory "):
-                b = b[10:]
-            if a.startswith("folder "):
-                b = b[7:]
-        try:
-            shutil.move(a, b)
-        except FileNotFoundError:
-            printbob("I can't find one of the files.")
-
+        command_move(text,nocap,"move ")
     elif text.startswith("read "):
-        text = text[5:]
-        nocap = nocap[5:]
-        while text.startswith("file ") or text.startswith("\"") or text.startswith("the ") or text.startswith("called ") or text.startswith("my ")\
-              or text.startswith("named ") or text.startswith("directory ") or text.startswith("folder "):
-            if text.startswith("\""):
-                text = text[1:]
-                nocap = nocap[1:]
-                break;
-            if text.startswith("file "):
-                text = text[5:]
-                nocap = nocap[5:]
-            if text.startswith("the "):
-                text = text[4:]
-                nocap = nocap[4:]
-            if text.startswith("called "):
-                text = text[7:]
-                nocap = nocap[7:]
-            if text.startswith("named "):
-                text = text[6:]
-                nocap = nocap[6:]
-            if text.startswith("my "):
-                text = text[3:]
-                nocap = nocap[3:]
-            if text.startswith("directory "):
-                text = text[10:]
-                nocap = nocap[10:]
-            if text.startswith("folder "):
-                text = text[7:]
-                nocap = nocap[7:]
-        try:
-            data = open(nocap, 'r').read()
-            print(data)
-        except FileNotFoundError:
-            printbob("I don't know where \""+nocap+"\" is")
-            
+        command_read(text,nocap,"read ")
     elif text.startswith("create "):
-        text = text[7:]
-        nocap = nocap[7:]
-        x = False
-        if text.startswith("a "):
-            text = text[2:]
-            nocap = nocap[2:]
-        if text.startswith("directory "):
-            text = text[10:]
-            nocap = nocap[10:]
-            x = True
-        elif text.startswith("folder "):
-            text = text[7:]
-            nocap = nocap[7:]
-            x = True
-        while text.startswith("\"") or text.startswith("called ") or text.startswith("named ")\
-              or text.startswith("and call it ") or text.startswith("and name it ") or text.startswith("that is "):
-            if text.startswith("\""):
-                text = text[1:]
-                nocap = nocap[1:]
-                break;
-            if text.startswith("called "):
-                text = text[7:]
-                nocap = nocap[7:]
-            if text.startswith("named "):
-                text = text[6:]
-                nocap = nocap[6:]
-            if text.startswith("and call it "):
-                text = text[12:]
-                nocap = nocap[12:]
-            if text.startswith("and name it "):
-                text = text[12:]
-                nocap = nocap[12:]
-            if text.startswith("that is "):
-                text = text[8:]
-                nocap = nocap[8:]
-        mkdir(text)
-        
+        command_mkdir(text,nocap,"create ")
     elif text.startswith("delete "):
-        text = text[7:]
-        nocap = nocap[7:]
-        while text.startswith("my ") or text.startswith("\"") or text.startswith("the ")\
-              or text.startswith("file ") or text.startswith("called ") or text.startswith("named ")\
-              or text.startswith("directory ") or text.startswith("folder ")  or text.startswith("document "):
-            if text.startswith("\""):
-                text = text[1:]
-                nocap = nocap[1:]
-                break;
-            if text.startswith("the "):
-                text = text[4:]
-                nocap = nocap[4:]
-            if text.startswith("my "):
-                text = text[6:]
-                nocap = nocap[6:]
-            if text.startswith("file "):
-                text = text[5:]
-                nocap = nocap[5:]
-            if text.startswith("called "):
-                text = text[7:]
-                nocap = nocap[7:]
-            if text.startswith("named "):
-                text = text[6:]
-                nocap = nocap[6:]
-            if text.startswith("directory "):
-                text = text[10:]
-                nocap = nocap[10:]
-            if text.startswith("folder "):
-                text = text[7:]
-                nocap = nocap[7:]
-            if text.startswith("document "):
-                text = text[9:]
-                nocap = nocap[9:]
-        send2trash.send2trash(nocap)
+        command_delete(text,nocap,"delete ")
         
-#####Music
     elif text.startswith("play "):
-        text = text[5:]
-        nocap = nocap[5:]
-        while text.startswith("song ") or text.startswith("video ") or text.startswith("my ") or text.startswith("\"")\
-              or text.startswith("the ") or text.startswith("file ") or text.startswith("called ") or text.startswith("named "):
-            if text.startswith("\""):
-                text = text[1:]
-                nocap = nocap[1:]
-                break;
-            if text.startswith("song "):
-                text = text[5:]
-                nocap = nocap[5:]
-            if text.startswith("video "):
-                text = text[6:]
-                nocap = nocap[6:]
-            if text.startswith("the "):
-                text = text[4:]
-                nocap = nocap[4:]
-            if text.startswith("my "):
-                text = text[6:]
-                nocap = nocap[6:]
-            if text.startswith("file "):
-                text = text[5:]
-                nocap = nocap[5:]
-            if text.startswith("called "):
-                text = text[7:]
-                nocap = nocap[7:]
-            if text.startswith("named "):
-                text = text[6:]
-                nocap = nocap[6:]
-        play(nocap)
-#####Misc
+        command_play(text,nocap,"play ")
+
     elif text.startswith("google for "):
-        text = text[11:]
-        nocap = nocap[11:]
-        google(nocap)
+        command_google(text,nocap,"google for ")
     elif text.startswith("google "):
-        text = text[7:]
-        nocap = nocap[7:]
-        google(nocap)
-#####CD
+        command_google(text,nocap,"google ")
+
     elif text.startswith("change directory to "):
-        try:
-            os.chdir(nocap[20:].replace("~",str(Path.home())))
-        except FileNotFoundError:
-            printbob(""+"Sorry but I don't undersand where "+nocap[20:]+" is. Maybe you misspelt something.")
+        command_cd(text,nocap,"change directory to ")
     elif text.startswith("change directory "):
-        try:
-            os.chdir(nocap[17:].replace("~",str(Path.home())))
-        except FileNotFoundError:
-            printbob(""+"Sorry but I don't undersand where "+nocap[17:]+" is. Maybe you misspelt something.")
+        command_cd(text,nocap,"change directory ")
     elif text.startswith("cd to "):
-        try:
-            os.chdir(nocap[6:].replace("~",str(Path.home())))
-        except FileNotFoundError:
-            printbob(""+"Sorry but I don't undersand where "+nocap[6:]+" is. Maybe you misspelt something.")
+        command_cd(text,nocap,"cd to ")
     elif text.startswith("cd "):
-        try:
-            os.chdir(nocap[3:].replace("~",str(Path.home())))
-        except FileNotFoundError:
-            printbob(""+"Sorry but I don't undersand where "+nocap[3:]+" is. Maybe you misspelt something.")
+        command_cd(text,nocap,"cd ")
 
 #####Jokes
     elif text.startswith("a joke"):
