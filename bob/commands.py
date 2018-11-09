@@ -1,6 +1,12 @@
 import shutil
 import os
+
+import send2trash
+
 from .multimedia import *
+from .__init__ import *
+from .cl import *
+
 def command_open(text,nocap,command):
     text = text[len(command):]
     nocap = nocap[len(command):]

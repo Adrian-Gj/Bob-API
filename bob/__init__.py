@@ -61,7 +61,33 @@ ENDINGS = [
     " for me",
     " if you can",
     ]
+global COMMANDS
+COMMANDS = {
+    "open ":"command_open",
+    "run ":"command_run",
+    "execute ":"command_run",
+    "exec ":"command_run",
+    "call ":"command_run",
+    "launch app ":"command_run",
+    "launch ":"command_run",
+    "edit ":"command_edit",
 
+    "create templates ":"command_create",
+    "move ":"command_move",
+    "read ":"command_read",
+    "create ":"command_mkdir",
+    "delete ":"command_delete",
+    
+    "play ":"command_play",
+
+    "google for ":"command_google",
+    "google ":"command_google",
+
+    "change directory to ":"command_cd",
+    "change directory ":"command_cd",
+    "cd to ":"command_cd",
+    "cd ":"command_cd",
+    }
 def printbob(stuff):
     global OUTPUT_CMD
     exec( OUTPUT_CMD )
@@ -609,6 +635,7 @@ def BOB(IN):
         query(text)
                  
     elif text.startswith("open "):
+        exec("command_open"+"(text,nocap,"+'"open "'+")")
         command_open(text,nocap,"open ")
     elif text.startswith("run "):
         command_run(text,nocap,"run ")
