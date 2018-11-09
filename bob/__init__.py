@@ -31,6 +31,35 @@ it = ""
 
 global OUTPUT_CMD
 OUTPUT_CMD = 'print(stuff)'
+global STARTERS
+STARTERS = [
+    "and ",
+    "hello ",
+    "hey ",
+    "hi ",
+    "so ",
+    "there ",
+    "will you ",
+    "can you ",
+    "please ",
+    "if you can ",
+    "man ",
+    "dude ",
+    "my guy ",
+    ]
+global ENDINGS
+ENDINGS = [
+    " please",
+    " thank you",
+    " thanks",
+    " now",
+    " will you",
+    " dude",
+    " man",
+    " my guy",
+    " for me",
+    " if you can",
+    ]
 
 def printbob(stuff):
     global OUTPUT_CMD
@@ -254,13 +283,6 @@ try:
 except FileNotFoundError:
     print("[BOB] No Location file availible. Creating new one.")
 
-    
-#try:
-#    data2 = open(str(Path.home())+"/"+".sims.bob", 'r').read()
-#    sims = eval(data2)
-#except FileNotFoundError:
-#    print("[BOB] No Sims file availible. Creating new one.")
-
 try:
     data3 = open(str(Path.home())+"/"+".commands.bob", 'r').read()
     commands = eval(data3)
@@ -273,20 +295,12 @@ try:
 except FileNotFoundError:
     print("[BOB] No Dynamics file availiable. Using defaults")
     
-#try:
-#    data5 = open(str(Path.home())+"/"+".dynamics_sims.bob", 'r').read()
-#    dynamics_sims = eval(data5)
-#except FileNotFoundError:
-#    print("[BOB] No Dynamics-Sims file availiable. Using defaults")
-    
+  
 print()
-#say("Hello I'm Bob!")
 
 os.chdir(str(Path.home()))
 
-lastloc = "london"
 
-########################################Queries####################################################################################################################
 def query(inp):
     proc = q_split(inp)
     type = q_type(inp)
@@ -450,34 +464,25 @@ def query(inp):
 ########################################Main Loop###################################################################################################################
 def BOB(IN):
     
-    info["up"]="the sky"
-    
     try:
         data4 = open(str(Path.home())+"/"+".dynamics.bob", 'r').read()
         dynamics = eval(data4)
     except FileNotFoundError:
         eval("\" \"")
-
     try:
         data3 = open(str(Path.home())+"/"+".commands.bob", 'r').read()
         commands = eval(data3)
     except FileNotFoundError:
         eval("\" \"")
-        
-    #try:
-    #    data5 = open(str(Path.home())+"/"+".dynamics_sims.bob", 'r').read()
-    #    dynamics_sims = eval(data5)
-    #except FileNotFoundError:
-    #    eval("\" \"")
-    
+            
     dynamics2 = {"time":"quarter to nine"}
     for key, value in dynamics.items():
         dynamics2[key] = eval(value)
-    info.update(dynamics2)   
-    #sims.update(dynamics_sims)
+    info.update(dynamics2)
+    
     text = ""
     try:
-        text = IN#input(os.getcwd()+"> ")
+        text = IN
     except KeyboardInterrupt:
         text = " "
     except EOFError:
@@ -486,111 +491,23 @@ def BOB(IN):
     text = text.lower()
 
 
-    #Stuff to add
-    Greeting = False
-    
-    #Word Starters
-    while text.startswith(myname+" ") or text.startswith("hello ") or text.startswith("hey ") \
-        or text.startswith("hi ") or text.startswith("so ") or text.startswith("there ") \
-        or text.startswith("will you ") or text.startswith("can you ") or text.startswith("please ")\
-        or text.startswith("if you can ") or text.startswith("man ") or text.startswith("dude ") or text.startswith("my guy ")\
-        or text.startswith("if you do not mind "):
-        if text.startswith(myname+" "):
-            text = text[len(myname)+1:]
-            nocap = nocap[len(myname)+1:]
-        if text.startswith("hello "):
-            text = text[6:]
-            nocap = nocap[6:]
-            Greeting = True
-        if text.startswith("hey "):
-            text = text[4:]
-            nocap = nocap[4:]
-            Greeting = True
-        if text.startswith("hi "):
-            text = text[3:]
-            nocap = nocap[3:]
-            Greeting = True
-        if text.startswith("so "):
-            text = text[3:]
-            nocap = nocap[3:]
-        if text.startswith("there "):
-            text = text[6:]
-            nocap = nocap[6:]
-        if text.startswith("will you "):
-            text = text[9:]
-            nocap = nocap[9:]
-        if text.startswith("can you "):
-            text = text[8:]
-            nocap = nocap[8:]
-        if text.startswith("please "):
-            text = text[7:]
-            nocap = nocap[7:]
-        if text.startswith("if you can "):
-            text = text[11:]
-            nocap = nocap[11:]
-        if text.startswith("man "):
-            text = text[4:]
-            nocap = nocap[4:]
-        if text.startswith("dude "):
-            text = text[5:]
-            nocap = nocap[5:]
-        if text.startswith("my guy "):
-            text = text[7:]
-            nocap = nocap[7:]
-        if text.startswith("if you do not mind "):
-            text = text[19:]
-            nocap = nocap[19:]
-            
-    #Word endings
-    while text.endswith(" "+myname) or text.endswith(" please") or text.endswith(" thank you")\
-        or text.endswith(" thanks") or text.endswith(" now") or text.endswith(" will you")\
-        or text.endswith(" dude") or text.endswith(" man") or text.endswith(" my guy")\
-        or text.endswith(" for me"):
-        if text.endswith(" "+myname):
-            text = text[:len(text)-4]
-            nocap = nocap[:len(nocap)-4]
-        if text.endswith(" please"):
-            text = text[:len(text)-7]
-            nocap = nocap[:len(nocap)-7]
-        if text.endswith(" thank you"):
-            text = text[:len(text)-10]
-            nocap = nocap[:len(nocap)-10]
-        if text.endswith(" thanks"):
-            text = text[:len(text)-7]
-            nocap = nocap[:len(nocap)-7]
-        if text.endswith(" now"):
-            text = text[:len(text)-4]
-            nocap = nocap[:len(nocap)-4]
-        if text.endswith(" will you"):
-            text = text[:len(text)-9]
-            nocap = nocap[:len(nocap)-9]
-        if text.endswith(" dude"):
-            text = text[:len(text)-5]
-            nocap = nocap[:len(nocap)-5]
-        if text.endswith(" man"):
-            text = text[:len(text)-4]
-            nocap = nocap[:len(nocap)-4]
-        if text.endswith(" my guy"):
-            text = text[:len(text)-7]
-            nocap = nocap[:len(nocap)-7]
-        if text.endswith(" for me"):
-            text = text[:len(text)-7]
-            nocap = nocap[:len(nocap)-7]
+    global STARTERS
+    global ENDINGS
+    STARTERS.append(myname+" ")
+    STARTERS.append("hi "myname+" ")
+    ENDINGS.append(" "+myname)
+    while text.startswith(tuple(STARTERS)):
+        for item in STARTERS:
+            if text.startswith(item):
+                text = text[len(item):]
+                if item == "hi "myname+" ":
+                    printbob("Hi "+username+"!")
+    while text.endswith(tuple(ENDINGS)):
+        for item in ENDINGS:
+            if text.endswith(item):
+                text = text[:-len(item)]
 
-
-    #Reply to stuff
-    if Greeting:
-        printbob("Hi "+username+"!")
-        
-    #Remove and
-    if text.startswith("and "):
-        text = text[4:]
-        nocap = nocap[4:]
-
-    
-########################################################Section 2#########################################################################################################
-
-##########SEMI_PROCESS#########
+##This section is about moving words around so bob understands them.
     if text.startswith("what ") and text.endswith(" is"):
         x = text[5:len(text)-3]
         text = "what is "+x
@@ -615,8 +532,6 @@ def BOB(IN):
     if text.startswith("when ") and text.endswith(" was"):
         x = text[5:len(text)-4]
         text = "when was "+x
-
-    
     if text.startswith("what ") and " is it" in text:
         if " is it " in text:
             x = text[5:text.find(" is it ")]
@@ -624,16 +539,11 @@ def BOB(IN):
         else:
             x = text[5:len(text)-6]
             text = "what is the "+x
-        
-
     if text.startswith("what ") and (not(text.startswith("what is "))) and (not(text.startswith("what does "))) and (not(text.startswith("what am "))) and (not(text.startswith("what are "))) and (not(text.startswith("what was "))) and (not(text.startswith("what were "))):
         x = text[5:]
         y = x.split(' ')
-        #print(y[0])
         obj = y[0]
         z = x[len(obj)+1:]
-        #print(z)
-
         type = " is "
         if " is " in text:
             type=" is "
@@ -646,15 +556,11 @@ def BOB(IN):
         elif " were " in text:
             type=" were "
         text = "what"+type+obj+" that "+z
-        #print(text)
     if text.startswith("who ") and (not(text.startswith("who is "))) and (not(text.startswith("who am "))) and (not(text.startswith("who are "))) and (not(text.startswith("who was "))) and (not(text.startswith("who were "))):
         x = text[4:]
         y = x.split(' ')
-        #print(y[0])
         obj = y[0]
         z = x[len(obj)+1:]
-        #print(z)
-
         type = " is "
         if " is " in text:
             type=" is "
@@ -667,15 +573,11 @@ def BOB(IN):
         elif " were " in text:
             type=" were "
         text = "who"+type+obj+" that "+z
-        #print(text)
     if text.startswith("where ") and (not(text.startswith("where is "))) and (not(text.startswith("where am "))) and (not(text.startswith("where are "))) and (not(text.startswith("where was "))) and (not(text.startswith("where were "))):
         x = text[6:]
         y = x.split(' ')
-        #print(y[0])
         obj = y[0]
         z = x[len(obj)+1:]
-        #print(z)
-
         type = " is "
         if " is " in text:
             type=" is "
@@ -686,15 +588,11 @@ def BOB(IN):
         elif " were " in text:
             type=" were "
         text = "where"+type+obj+" that "+z
-        #print(text)
     if text.startswith("when ") and (not(text.startswith("when is "))) and (not(text.startswith("when am "))) and (not(text.startswith("when are "))) and (not(text.startswith("when was "))) and (not(text.startswith("when were "))):
         x = text[5:]
         y = x.split(' ')
-        #print(y[0])
         obj = y[0]
         z = x[len(obj)+1:]
-        #print(z)
-
         type = " is "
         if " is " in text:
             type=" is "
@@ -707,32 +605,11 @@ def BOB(IN):
         elif " were " in text:
             type=" were "
         text = "when"+type+obj+" that "+z
-        #print(text)
-####loc
-    if text.startswith("i am in "):
-        lastloc = text[8:].lower()
-        location["i"] = lastloc
-    elif text.startswith("we are in "):
-        lastloc = text[10:].lower()
-        location["i"] = lastloc
-    elif text.startswith("i am currently in "):
-        lastloc = text[8:].lower()
-        location["i"] = lastloc
-    elif text.startswith("we are currently in "):
-        lastloc = text[10:].lower()
-        location["i"] = lastloc
-    elif text.startswith("i am now in "):
-        lastloc = text[8:].lower()
-        location["i"] = lastloc
-    elif text.startswith("we are now in "):
-        lastloc = text[10:].lower()
-        location["i"] = lastloc
 
-#####Question
-    elif text.startswith("what ") or text.startswith("who ") or text.startswith("where ") or text.startswith("when ") or text.startswith("how "):
+##This is the heart of the program where questions are answered.
+    if text.startswith("what ") or text.startswith("who ") or text.startswith("where ") or text.startswith("when ") or text.startswith("how "):
         query(text)
-            
-#####Basic Commands        
+                 
     elif text.startswith("open "):
         text = text[5:]
         nocap = nocap[5:]
