@@ -634,60 +634,24 @@ def BOB(IN):
     if text.startswith("what ") or text.startswith("who ") or text.startswith("where ") or text.startswith("when ") or text.startswith("how "):
         query(text)
                  
-    elif text.startswith("open "):
-        exec("command_open"+"(text,nocap,"+'"open "'+")")
-        command_open(text,nocap,"open ")
-    elif text.startswith("run "):
-        command_run(text,nocap,"run ")
-    elif text.startswith("execute "):
-        command_run(text,nocap,"execute ")
-    elif text.startswith("exec "):
-        command_run(text,nocap,"exec ")
-    elif text.startswith("call "):
-        command_run(text,nocap,"call ")
-    elif text.startswith("launch app "):
-        command_run(text,nocap,"launch app ")
-    elif text.startswith("launch "):
-        command_run(text,nocap,"launch ")
-    elif text.startswith("edit "):
-        command_edit(text,nocap,"edit ")
-
-    elif text.startswith("create templates "):
-        command_create(text,nocap,"create templates ")
-
-    elif text.startswith("move "):
-        command_move(text,nocap,"move ")
-    elif text.startswith("read "):
-        command_read(text,nocap,"read ")
-    elif text.startswith("create "):
-        command_mkdir(text,nocap,"create ")
-    elif text.startswith("delete "):
-        command_delete(text,nocap,"delete ")
+    elif text[0:findnth(text," ",6)] in COMMANDS:
+        exec(COMMANDS[text[0:findnth(text," ",6)]] + "(text,nocap," + '"' + text[0:findnth(text," ",6)] + '")')
+    elif text[0:findnth(text," ",5)] in COMMANDS:
+        exec(COMMANDS[text[0:findnth(text," ",5)]] + "(text,nocap," + '"' + text[0:findnth(text," ",5)] + '")')
+    elif text[0:findnth(text," ",4)] in COMMANDS:
+        exec(COMMANDS[text[0:findnth(text," ",4)]] + "(text,nocap," + '"' + text[0:findnth(text," ",4)] + '")')
+    elif text[0:findnth(text," ",3)] in COMMANDS:
+        exec(COMMANDS[text[0:findnth(text," ",3)]] + "(text,nocap," + '"' + text[0:findnth(text," ",3)] + '")')
+    elif text[0:findnth(text," ",2)] in COMMANDS:
+        exec(COMMANDS[text[0:findnth(text," ",2)]] + "(text,nocap," + '"' + text[0:findnth(text," ",2)] + '")')
+    elif text[0:findnth(text," ",1)] in COMMANDS:
+        exec(COMMANDS[text[0:findnth(text," ",1)]] + "(text,nocap," + '"' + text[0:findnth(text," ",1)] + '")')
         
-    elif text.startswith("play "):
-        command_play(text,nocap,"play ")
-
-    elif text.startswith("google for "):
-        command_google(text,nocap,"google for ")
-    elif text.startswith("google "):
-        command_google(text,nocap,"google ")
-
-    elif text.startswith("change directory to "):
-        command_cd(text,nocap,"change directory to ")
-    elif text.startswith("change directory "):
-        command_cd(text,nocap,"change directory ")
-    elif text.startswith("cd to "):
-        command_cd(text,nocap,"cd to ")
-    elif text.startswith("cd "):
-        command_cd(text,nocap,"cd ")
-
-#####Jokes
     elif text.startswith("a joke"):
         printbob("You are a joke...")
     elif text.startswith("roll a dice"):
         printbob("Here you go: "+str(random.randint(1, 6)))
 
-#####Exiting
     elif text.startswith("exit"):
         exit()
     elif text.startswith("bye"):
@@ -697,7 +661,6 @@ def BOB(IN):
     elif text.startswith("quit"):
         exit()
 
-#####Complex Commands
     elif text[0:findnth(text," ",3)] in commands:
         if commands[text[0:findnth(text," ",3)]].startswith(":Python:"):
             exec(commands[text[0:findnth(text," ",3)]][8:].replace("_input_",nocap[findnth(nocap," ",3)+1:].replace("\\","\\\\").replace('"','\\\"').replace("'",'\\\'')))
@@ -724,7 +687,7 @@ def BOB(IN):
         else:
             os.system(commands[text])  
         
-#####Add command
+    #Add command
     elif text.startswith("to do "):
         try:
             data3 = open(str(Path.home())+"/"+".commands.bob", 'r').read()
@@ -754,7 +717,7 @@ def BOB(IN):
         f.close()
 
 
-#####Statement
+    #Statement
     elif text.startswith("remember that "):
         x = text[14:]
         remember(x)
@@ -768,11 +731,11 @@ def BOB(IN):
         x = text
         remember(x)
         
-#####Else
+    #Else
     else:
         say("Sorry //2*1 dont understant how to "+ text + ".")
 
-#####Saving################################################################################
+##Saving
     f = open(str(Path.home())+"/"+".info.bob","w")
     f.write( str(info) )
     f.close()
