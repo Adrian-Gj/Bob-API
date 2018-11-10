@@ -23,7 +23,7 @@ from .multimedia import *
 from .cl import *
 from .mine import *
 from .algorithmy import *
-from .commands import *
+#from .commands import *
 
 myname = "bob"
 username = getpass.getuser()
@@ -235,7 +235,7 @@ def say( str ):
     return
 
         
-print("---->Made using the amazing Bob-api that was created by Adrian Gjonca\n---->Bob-api is licensed using the: GNU General Public License v3.0")
+#print("---->Made using the amazing Bob-api that was created by Adrian Gjonca\n---->Bob-api is licensed using the: GNU General Public License v3.0")
         
 info = {
         "you": "I'm Bob! I'm great Thanks!",
@@ -323,7 +323,7 @@ except FileNotFoundError:
     print("[BOB] No Dynamics file availiable. Using defaults")
     
   
-print()
+#print()
 
 os.chdir(str(Path.home()))
 
@@ -347,19 +347,20 @@ def query(inp):
             y = input("?> ")
 
             if "yes" in y.lower():
-                printbob("\n"+wikipedia.summary(x[0]))
+                printbob("\n"+wikipedia.summary(x[0], sentences=5))
                 y = input("\nI can remember that for next time if you like?\n?> ")
                 if "yes" in y.lower():
-                    remember(key + " is " + wikipedia.summary(x[0]))
+                    print(key + " is " + wikipedia.summary(x[0], sentences=5))
+                    remember(key + " is " + wikipedia.summary(x[0], sentences=5))
                     printbob("\n"+"All done!")
             else:
                 printbob("How about '"+x[1]+"'?")
                 y = input("?> ")
                 if "yes" in y.lower():
-                    printbob("\n"+wikipedia.summary(x[1]))
+                    printbob("\n"+wikipedia.summary(x[1], sentences=5))
                     y = input("\nI can remember that for next time if you like?\n?> ")
                     if "yes" in y.lower():
-                        remember(key + " is " + wikipedia.summary(x[0]))
+                        remember(key + " is " + wikipedia.summary(x[0], sentences=5))
                         printbob("\n"+"All done!")
                     else:
                         printbob("*sigh*\nI give up. Go look it up on google or sonthing then tell me about it when you get back...")
@@ -379,19 +380,19 @@ def query(inp):
             y = input("?> ")
 
             if "yes" in y.lower():
-                printbob("\n"+wikipedia.summary(x[0]))
+                printbob("\n"+wikipedia.summary(x[0], sentences=5))
                 y = input("\nI can remember that for next time if you like?\n?> ")
                 if "yes" in y.lower():
-                    remember(key + " was " + wikipedia.summary(x[0]))
+                    remember(key + " was " + wikipedia.summary(x[0], sentences=5))
                     printbob("\n"+"All done!")
             else:
                 printbob("How about '"+x[1]+"'?")
                 y = input("?> ")
                 if "yes" in y.lower():
-                    printbob("\n"+wikipedia.summary(x[1]))
+                    printbob("\n"+wikipedia.summary(x[1], sentences=5))
                     y = input("\nI can remember that for next time if you like?\n?> ")
                     if "yes" in y.lower():
-                        remember(key + " was " + wikipedia.summary(x[0]))
+                        remember(key + " was " + wikipedia.summary(x[0], sentences=5))
                         printbob("\n"+"All done!")
                     else:
                         printbob("*sigh*\nI give up. Go look it up on google or sonthing then tell me about it when you get back...")
@@ -411,19 +412,19 @@ def query(inp):
             y = input("?> ")
 
             if "yes" in y.lower():
-                printbob("\n"+wikipedia.summary(x[0]))
+                printbob("\n"+wikipedia.summary(x[0], sentences=5))
                 y = input("\nI can remember that for next time if you like?\n?> ")
                 if "yes" in y.lower():
-                    remember(key + " is on " + wikipedia.summary(x[0]))
+                    remember(key + " is on " + wikipedia.summary(x[0], sentences=5))
                     printbob("\n"+"All done!")
             else:
                 printbob("How about '"+x[1]+"'?")
                 y = input("?> ")
                 if "yes" in y.lower():
-                    printbob("\n"+wikipedia.summary(x[1]))
+                    printbob("\n"+wikipedia.summary(x[1], sentences=5))
                     y = input("\nI can remember that for next time if you like?\n?> ")
                     if "yes" in y.lower():
-                        remember(key + " is on " + wikipedia.summary(x[0]))
+                        remember(key + " is on " + wikipedia.summary(x[0], sentences=5))
                         printbob("\n"+"All done!")
                     else:
                         printbob("*sigh*\nI give up. Go look it up on google or sonthing then tell me about it when you get back...")
@@ -443,19 +444,19 @@ def query(inp):
             y = input("?> ")
 
             if "yes" in y.lower():
-                printbob("\n"+wikipedia.summary(x[0]))
+                printbob("\n"+wikipedia.summary(x[0], sentences=5))
                 y = input("\nI can remember that for next time if you like?\n?> ")
                 if "yes" in y.lower():
-                    remember(key + " was on " + wikipedia.summary(x[0]))
+                    remember(key + " was on " + wikipedia.summary(x[0], sentences=5))
                     printbob("\n"+"All done!")
             else:
                 printbob("How about '"+x[1]+"'?")
                 y = input("?> ")
                 if "yes" in y.lower():
-                    printbob("\n"+wikipedia.summary(x[1]))
+                    printbob("\n"+wikipedia.summary(x[1], sentences=5))
                     y = input("\nI can remember that for next time if you like?\n?> ")
                     if "yes" in y.lower():
-                        remember(key + " was on " + wikipedia.summary(x[0]))
+                        remember(key + " was on " + wikipedia.summary(x[0], sentences=5))
                         printbob("\n"+"All done!")
                     else:
                         printbob("*sigh*\nI give up. Go look it up on google or sonthing then tell me about it when you get back...")
@@ -634,20 +635,20 @@ def BOB(IN):
     if text.startswith("what ") or text.startswith("who ") or text.startswith("where ") or text.startswith("when ") or text.startswith("how "):
         query(text)
                  
-    elif text[0:findnth(text," ",6)]+" " in COMMANDS:
-        exec(COMMANDS[text[0:findnth(text," ",6)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",6)] + ' ")')
-    elif text[0:findnth(text," ",5)]+" " in COMMANDS:
-        exec(COMMANDS[text[0:findnth(text," ",5)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",5)] + ' ")')
-    elif text[0:findnth(text," ",4)]+" " in COMMANDS:
-        exec(COMMANDS[text[0:findnth(text," ",4)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",4)] + ' ")')
-    elif text[0:findnth(text," ",3)]+" " in COMMANDS:
-        exec(COMMANDS[text[0:findnth(text," ",3)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",3)] + ' ")')
-    elif text[0:findnth(text," ",2)]+" " in COMMANDS:
-        exec(COMMANDS[text[0:findnth(text," ",2)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",2)] + ' ")')
-    elif text[0:findnth(text," ",1)]+" " in COMMANDS:
-        exec(COMMANDS[text[0:findnth(text," ",1)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",1)] + ' ")')
-    elif text[0:findnth(text," ",0)]+" " in COMMANDS:
-        exec(COMMANDS[text[0:findnth(text," ",0)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",0)] + ' ")')
+    #elif text[0:findnth(text," ",6)]+" " in COMMANDS:
+    #    exec(COMMANDS[text[0:findnth(text," ",6)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",6)] + ' ")')
+    #elif text[0:findnth(text," ",5)]+" " in COMMANDS:
+    #    exec(COMMANDS[text[0:findnth(text," ",5)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",5)] + ' ")')
+    #elif text[0:findnth(text," ",4)]+" " in COMMANDS:
+    #    exec(COMMANDS[text[0:findnth(text," ",4)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",4)] + ' ")')
+    #elif text[0:findnth(text," ",3)]+" " in COMMANDS:
+    #    exec(COMMANDS[text[0:findnth(text," ",3)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",3)] + ' ")')
+    #elif text[0:findnth(text," ",2)]+" " in COMMANDS:
+    #    exec(COMMANDS[text[0:findnth(text," ",2)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",2)] + ' ")')
+    #elif text[0:findnth(text," ",1)]+" " in COMMANDS:
+    #    exec(COMMANDS[text[0:findnth(text," ",1)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",1)] + ' ")')
+    #elif text[0:findnth(text," ",0)]+" " in COMMANDS:
+    #    exec(COMMANDS[text[0:findnth(text," ",0)]+" "] + "(text,nocap," + '"' + text[0:findnth(text," ",0)] + ' ")')
         
     elif text.startswith("a joke"):
         printbob("You are a joke...")
@@ -736,35 +737,30 @@ def BOB(IN):
     #Else
     else:
         say("Sorry //2*1 dont understant how to "+ text + ".")
-        print("'"+text[0:findnth(text," ",1)]+" "+"'")
 
 ##Saving
-    f = open(str(Path.home())+"/"+".info.bob","w")
-    f.write( str(info) )
+    f = open(str(Path.home())+"/"+".info.bob","w", encoding='utf-8')
+    f.write( str(info))
     f.close()
 
-    #a = open(str(Path.home())+"/"+".sims.bob","w")
-    #a.write( str(sims) )
-    #a.close()
-
-    b = open(str(Path.home())+"/"+".info_was.bob","w")
-    b.write( str(info_was) )
+    b = open(str(Path.home())+"/"+".info_was.bob","w", encoding='utf-8')
+    b.write( str(info_was))
     b.close()
 
-    c = open(str(Path.home())+"/"+".location.bob","w")
-    c.write( str(location) )
+    c = open(str(Path.home())+"/"+".location.bob","w", encoding='utf-8')
+    c.write( str(location))
     c.close()
 
-    d = open(str(Path.home())+"/"+".location_was.bob","w")
-    d.write( str(location_was) )
+    d = open(str(Path.home())+"/"+".location_was.bob","w", encoding='utf-8')
+    d.write( str(location_was))
     d.close()
 
-    e = open(str(Path.home())+"/"+".time.bob","w")
-    e.write( str(time) )
+    e = open(str(Path.home())+"/"+".time.bob","w", encoding='utf-8')
+    e.write( str(time))
     e.close()
 
-    g = open(str(Path.home())+"/"+".time_was.bob","w")
-    g.write( str(time) )
+    g = open(str(Path.home())+"/"+".time_was.bob","w", encoding='utf-8')
+    g.write( str(time))
     g.close()
 
 
