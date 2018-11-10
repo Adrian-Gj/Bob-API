@@ -23,7 +23,7 @@ from .multimedia import *
 from .cl import *
 from .mine import *
 from .algorithmy import *
-#from .commands import *
+from .commands import *
 
 myname = "bob"
 username = getpass.getuser()
