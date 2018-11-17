@@ -212,7 +212,7 @@ def say( str ):
 
     x = x.replace(" your ", " //3*1 ")
     x = x.replace(" my ", " //3*2 ")
-	
+        
     x = x.replace(" yourself ", " //4*1 ")
     x = x.replace(" myself ", " //4*2 ")
     
@@ -225,7 +225,7 @@ def say( str ):
 
     x = x.replace("//3*1", "my")
     x = x.replace("//3*2", "your")
-	
+        
     x = x.replace("//4*1", "myself")
     x = x.replace("//4*2", "yourself")
     if "%SEARCH%" in str:
@@ -766,4 +766,6 @@ def BOB(IN):
 
 
     
+
+
 
